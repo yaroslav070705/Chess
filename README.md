@@ -1,2 +1,3 @@
 # Chess
 Chess project
+Ярослав
