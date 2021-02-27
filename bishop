@@ -1,0 +1,13 @@
+void drawelephant (int x, int y, int r,COLORREF color)
+    {
+    txSetColor(TX_WHITE,0.5);
+    txSetFillColor(color);
+    POINT elephant[4] = {{x - 1.5 * r, y + 3.5 * r}, {x + 1.5 * r, y + 3.5 * r}, {x + 2.5 * r, y + 9 * r}, {x - 2.5 * r, y + 9 * r} };
+
+    txPolygon (elephant, 4);
+    txCircle (x, y + 2.5 * r, 2 * r);
+    txCircle (x, y, 1 * r);
+
+
+
+    }
