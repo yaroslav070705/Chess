@@ -1,1 +1,78 @@
+#include "base_figure.h"
+
+
+class King: public BaseFigure{   ///< класс ладьи
+ public:
+    King(int type0, int x_cell0, int y_cell0) : BaseFigure(type0, x_cell0, y_cell0){}      ///< конструктор
+    virtual void draw() override{}                                                          ///< рисование
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;               ///< просчёт возможности ходов
+    virtual void change() override{}
+    /*void printArray(){
+      cout<<"size="<<move_ability_cells.size()<<'\n';
+      for (int i = 0; i < move_ability_cells.size(); i++){
+         cout<<"[y"<<i<<"]="<<move_ability_cells[i][0]<<"  ";
+         cout<<"[x"<<i<<"]="<<move_ability_cells[i][1]<<'\n';
+      }
+    } */
+};
+
+
+void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
+    if((x_cell+1) < 9 && (y_cell-1) > 0)
+    {                                           ///< вверх право
+        int* cell = new int[2];
+        cell[0] = y_cell - 1;
+        cell[1] = x_cell + 1;
+        move_ability_cells.push_back(cell);
+    }
+    if((x_cell -1) > 0 && (y_cell-1) > 0)
+    {                                           ///< вверх влево
+        int* cell = new int[2];
+        cell[0] = y_cell - 1;
+        cell[1] = x_cell - 1;
+        move_ability_cells.push_back(cell);
+    }
+    if((x_cell+1) < 9 && (y_cell+1) < 9)
+    {                                           ///< вниз вправо
+        int* cell = new int[2];
+        cell[0] = y_cell + 1;
+        cell[1] = x_cell + 1;
+        move_ability_cells.push_back(cell);
+    }
+    if((x_cell-1) > 0 && (y_cell+1) < 9)
+    {                                           ///< вниз влево
+        int* cell = new int[2];
+        cell[0] = y_cell + 1;
+        cell[1] = x_cell - 1;
+        move_ability_cells.push_back(cell);
+    }
+    if((y_cell-1) > 0)
+    {                                           ///< вверх
+        int* cell = new int[2];
+        cell[0] = y_cell - 1;
+        cell[1] = x_cell;
+        move_ability_cells.push_back(cell);
+    }
+    if((y_cell+1) < 9)
+    {                                           ///< вниз
+        int* cell = new int[2];
+        cell[0] = y_cell + 1;
+        cell[1] = x_cell;
+        move_ability_cells.push_back(cell);
+    }
+    if((x_cell+1) < 9)
+    {                                           ///< вправо
+        int* cell = new int[2];
+        cell[0] = y_cell;
+        cell[1] = x_cell + 1;
+        move_ability_cells.push_back(cell);
+    }
+    if((x_cell-1) > 0)
+    {                                           ///< влево
+        int* cell = new int[2];
+        cell[0] = y_cell;
+        cell[1] = x_cell - 1;
+        move_ability_cells.push_back(cell);
+    }
+}
 
