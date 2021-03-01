@@ -17,7 +17,7 @@ class Queen: public BaseFigure{   ///< класс ладьи
 };
 
 
-void Bishop :: count_move_ability_cells(vector<BaseFigure*> figures) {
+void Queen :: count_move_ability_cells(vector<BaseFigure*> figures) {
     bool out = false;
     for(int i = 1; (y_cell - i >= 1) && (x_cell + i < 9); i++) {   ///< вверх право
         int* cell = new int[2];
