@@ -1,11 +1,12 @@
+///< @author Roma
 #include "base_figure.h"
 
 
-class Bishop: public BaseFigure{   ///< êëàññ ëàäüè
+class Bishop: public BaseFigure{   ///< ÃªÃ«Ã Ã±Ã± Ã«Ã Ã¤Ã¼Ã¨
  public:
-    Bishop(int type0, int x_cell0, int y_cell0) : BaseFigure(type0, x_cell0, y_cell0){}      ///< êîíñòðóêòîð
-    virtual void draw() override{}                                                          ///< ðèñîâàíèå
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;               ///< ïðîñ÷¸ò âîçìîæíîñòè õîäîâ
+    Bishop(int type0, int x_cell0, int y_cell0) : BaseFigure(type0, x_cell0, y_cell0){}      ///< ÃªÃ®Ã­Ã±Ã²Ã°Ã³ÃªÃ²Ã®Ã°
+    virtual void draw() override{}                                                          ///< Ã°Ã¨Ã±Ã®Ã¢Ã Ã­Ã¨Ã¥
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;               ///< Ã¯Ã°Ã®Ã±Ã·Â¸Ã² Ã¢Ã®Ã§Ã¬Ã®Ã¦Ã­Ã®Ã±Ã²Ã¨ ÃµÃ®Ã¤Ã®Ã¢
     virtual void change() override{}
     /*void printArray(){
       cout<<"size="<<move_ability_cells.size()<<'\n';
@@ -19,7 +20,7 @@ class Bishop: public BaseFigure{   ///< êëàññ ëàäüè
 
 void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
     bool out = false;
-    for(int i = 1; (y_cell - i >= 1) && (x_cell + i < 9); i++) {   ///< ââåðõ ïðàâî
+    for(int i = 1; (y_cell - i >= 1) && (x_cell + i < 9); i++) {   ///< Ã¢Ã¢Ã¥Ã°Ãµ Ã¯Ã°Ã Ã¢Ã®
         int* cell = new int[2];
         cell[0] = y_cell - i;
         cell[1] = x_cell + i;
@@ -38,7 +39,7 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
     }
 
     out = false;
-    for(int i = 1; (y_cell - i >= 1) && (x_cell - i >= 1); i++) {   ///< ââåðõ ëåâî
+    for(int i = 1; (y_cell - i >= 1) && (x_cell - i >= 1); i++) {   ///< Ã¢Ã¢Ã¥Ã°Ãµ Ã«Ã¥Ã¢Ã®
         int* cell = new int[2];
         cell[0] = y_cell - i;
         cell[1] = x_cell - i;
@@ -56,7 +57,7 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     out = false;
-    for(int i = 1; (y_cell + i < 9) && (x_cell + i < 9); i++) {   ///< ââåðõ ïðàâî
+    for(int i = 1; (y_cell + i < 9) && (x_cell + i < 9); i++) {   ///< Ã¢Ã¢Ã¥Ã°Ãµ Ã¯Ã°Ã Ã¢Ã®
         int* cell = new int[2];
         cell[0] = y_cell + i;
         cell[1] = x_cell + i;
@@ -74,7 +75,7 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     out = false;
-    for(int i = 1; (y_cell + i < 9) && (x_cell - i >= 1); i++) {   ///< âíèç âëåâî
+    for(int i = 1; (y_cell + i < 9) && (x_cell - i >= 1); i++) {   ///< Ã¢Ã­Ã¨Ã§ Ã¢Ã«Ã¥Ã¢Ã®
         int* cell = new int[2];
         cell[0] = y_cell + i;
         cell[1] = x_cell - i;
