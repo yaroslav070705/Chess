@@ -1,3 +1,4 @@
+///< @author Yaroslav Roman Anna
 using namespace std;
 
 class BaseFigure{
