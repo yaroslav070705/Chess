@@ -1,5 +1,6 @@
 //#include "cell.h"
 //#include "BaseFigure.h"
+///< @author Yaroslav Roman Anna
 using namespace std;
 
 class ChessField{
