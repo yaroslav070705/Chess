@@ -9,7 +9,7 @@ public:
     virtual void change() override{}
 };
 
-void Knight :: count_move_ability_cells(vector<BaseFigure*> figures){
+void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
     if(y_cell > 2){
         if(x_cell > 1){
             int* cell = new int[2];
