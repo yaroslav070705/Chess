@@ -1,8 +1,7 @@
+///< @author Roma
 #include "base_figure.h"
 
-
-class King: public BaseFigure{   ///< класс ладьи
- public:
+class King: public BaseFigure{   ///< класс короля
     King(int type0, int x_cell0, int y_cell0) : BaseFigure(type0, x_cell0, y_cell0){}      ///< конструктор
     virtual void draw() override{}                                                          ///< рисование
     virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;               ///< просчёт возможности ходов
