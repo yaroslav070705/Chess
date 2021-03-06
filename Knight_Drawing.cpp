@@ -1,5 +1,4 @@
-//@authors Stepan,
-//         Timofey
+///< @authors Stepan, Timofey
 
 #include <TXLib.h>
 
@@ -17,7 +16,7 @@ void drawKnight  (int x, int y, int r, COLORREF color, COLORREF color1, COLORREF
     txSetColor (color1, 5*r);
 
     txSetFillColor (color);
-    POINT Knight[14] = {{r *  400  /5 + x, r *  300   /5 + y},     //тело без ушей
+    POINT Knight[14] = {{r *  400  /5 + x, r *  300   /5 + y},     //ГІГҐГ«Г® ГЎГҐГ§ ГіГёГҐГ©
                         {r *  300  /5 + x, r *  500   /5 + y},
                         {r *  350 /5 + x, r *  600   /5 + y},
                         {r *  400  /5 + x, r *  600   /5 + y},
@@ -41,7 +40,7 @@ void drawKnight  (int x, int y, int r, COLORREF color, COLORREF color1, COLORREF
 
     txSetColor (color1, 5*r);
     txSetFillColor (color);
-    POINT Ears[7] = {{r *  400  /5 + x, r *  300    /5 + y},      //уши
+    POINT Ears[7] = {{r *  400  /5 + x, r *  300    /5 + y},      //ГіГёГЁ
                      {r *  450 /5 + x, r *  200    /5 + y},
                      {r *  500  /5 + x, r * 325  /5 + y},
                      {r *  550 /5 + x, r *  200    /5 + y},
@@ -51,5 +50,5 @@ void drawKnight  (int x, int y, int r, COLORREF color, COLORREF color1, COLORREF
     txPolygon  (Ears, 7);
 
     txSetColor (color1, 2*r);
-    txLine (r *  350 /5 + x, r *  600 /5 + y, r *  400 /5 + x, r *  550 /5 + y);    //полоска рта
+    txLine (r *  350 /5 + x, r *  600 /5 + y, r *  400 /5 + x, r *  550 /5 + y);    //ГЇГ®Г«Г®Г±ГЄГ  Г°ГІГ 
 }
