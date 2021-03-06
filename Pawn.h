@@ -1,40 +1,52 @@
-using namespace std;
+///< @author Anna,Artiom,Timofey
 
-class Pawn: public BaseFigure{   ///< êëàññ ïåøêè
+class Pawn: public BaseFigure{   ///< ÐºÐ»Ð°ÑÑ Ð¿ÐµÑˆÐºÐ¸
  public:
-    Pawn(int type0, int x_cell0, int y_cell0) : BaseFigure(type0, x_cell0, y_cell0){}      ///< êîíñòðóêòîð
-    virtual void draw(int x, int y, int r) override{}                                                         ///< ðèñîâàíèå
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;           ///< ïðîñ÷¸ò âîçìîæíîñòè õîäîâ
+    Pawn(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}      ///< ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€
+    virtual void draw(int x, int y, int r) override;                                      ///< Ñ€Ð¸ÑÐ¾Ð²Ð°Ð½Ð¸Ðµ
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;           ///< Ð¿Ñ€Ð¾ÑÑ‡Ñ‘Ñ‚ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚Ð¸ Ñ…Ð¾Ð´Ð¾Ð²
     virtual void change() override{}
 };
 
+void Pawn::draw(int x, int y, int r){
+    txSetColor(side_color,2);
+    txSetFillColor(main_color);
+    POINT pawn[18] = {{2 * r + x, 0 * r + y}, {4 * r + x, 0 * r + y}, {5 * r + x, 1 * r + y}, {5 * r + x, 3 * r + y},
+                     {4 * r + x, 4 * r + y}, {4 * r + x, 5 * r + y}, {5 * r + x, 12 * r + y}, {6 * r + x, 12 * r + y},
+                     {6 * r + x, 13 * r + y}, {0 * r + x, 13 * r + y}, {0 * r + x, 12 * r + y}, {5 * r + x, 12 * r + y},
+                     {1 * r + x, 12 * r + y}, {2 * r + x, 5 * r + y}, {2 * r + x, 4 * r + y}, {1 * r + x, 3 * r + y},
+                     {1 * r + x, 1 * r + y}, {2 * r + x, 0 * r + y}};
+    txPolygon (pawn, 18);
+}
+
 void Pawn :: count_move_ability_cells(vector<BaseFigure*> figures) {
-    if(type == 0) {     // áåëàÿ
-        //int i = y_cell - 1;
+    if(type == 0) {     // Ð±ÐµÐ»Ð°Ñ
         int i = y_cell;
-        for(auto figura : figures) {
-            if((i - 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell())) {     //ïðàâàÿ âåðõíÿÿ äèàãîíàëü
-                int* cell = new int[2];
-                cell[0] = i - 1;
-                cell[1] = x_cell + 1;
-                move_ability_cells.push_back(cell);
-            }
-            if((i - 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell())) {     //ëåâàÿ âåðõíÿÿ äèàãîíàëü
-                int* cell = new int[2];
-                cell[0] = i - 1;
-                cell[1] = x_cell - 1;
-                move_ability_cells.push_back(cell);
-            }
-            if((i-1 != figura->get_y_cell()) || (x_cell != figura->get_x_cell())) {             //êëåòêà ââåðõ
-                int* cell = new int[2];
-                cell[0] = i-1;
-                cell[1] = x_cell;
-                move_ability_cells.push_back(cell);
+        if(y_cell != 0){
+            for(auto figura : figures) {
+                if((i - 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type())) {     //Ð¿Ñ€Ð°Ð²Ð°Ñ Ð²ÐµÑ€Ñ…Ð½ÑÑ Ð´Ð¸Ð°Ð³Ð¾Ð½Ð°Ð»ÑŒ
+                    int* cell = new int[2];
+                    cell[0] = i - 1;
+                    cell[1] = x_cell + 1;
+                    move_ability_cells.push_back(cell);
+                }
+                if((i - 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type())) {     //Ð»ÐµÐ²Ð°Ñ Ð²ÐµÑ€Ñ…Ð½ÑÑ Ð´Ð¸Ð°Ð³Ð¾Ð½Ð°Ð»ÑŒ
+                    int* cell = new int[2];
+                    cell[0] = i - 1;
+                    cell[1] = x_cell - 1;
+                    move_ability_cells.push_back(cell);
+                }
+                if((i - 1 != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {                                         //ÐºÐ»ÐµÑ‚ÐºÐ° Ð²Ð²ÐµÑ€Ñ…
+                    int* cell = new int[2];
+                    cell[0] = i-1;
+                    cell[1] = x_cell;
+                    move_ability_cells.push_back(cell);
+                }
             }
         }
         if(y_cell == 6){
             for(auto figura : figures) {
-                if((i - 1 != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {      //2 êëåòêè ââåðõ
+                if((i - 1 != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {      //2 ÐºÐ»ÐµÑ‚ÐºÐ¸ Ð²Ð²ÐµÑ€Ñ…
                     int* cell = new int[2];
                     cell[0] = i - 2;
                     cell[1] = x_cell;
@@ -42,32 +54,35 @@ void Pawn :: count_move_ability_cells(vector<BaseFigure*> figures) {
                 }
             }
         }
+
     }
-    if(type == 1) {              // ÷¸ðíàÿ
+    if(type == 1) {     // Ñ‡Ñ‘Ñ€Ð½Ð°Ñ
         int i = y_cell;
-        for(auto figura : figures) {
-            if((i + 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell())) {    //ïðàâàÿ íèæíÿÿ äèàãîíàëü
-                int* cell = new int[2];
-                cell[0] = i + 1;
-                cell[1] = x_cell + 1;
-                move_ability_cells.push_back(cell);
-            }
-            if((i + 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell())) {    //ëåâàÿ íèæíÿÿ äèàãîíàëü
-                int* cell = new int[2];
-                cell[0] = i + 1;
-                cell[1] = x_cell - 1;
-                move_ability_cells.push_back(cell);
-            }
-            if((i != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {             //êëåòêà âíèç
-                int* cell = new int[2];
-                cell[0] = i+1;
-                cell[1] = x_cell;
-                move_ability_cells.push_back(cell);
+        if(y_cell != 7){
+            for(auto figura : figures) {
+                if((i + 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type())) {    //Ð¿Ñ€Ð°Ð²Ð°Ñ Ð½Ð¸Ð¶Ð½ÑÑ Ð´Ð¸Ð°Ð³Ð¾Ð½Ð°Ð»ÑŒ
+                    int* cell = new int[2];
+                    cell[0] = i + 1;
+                    cell[1] = x_cell + 1;
+                    move_ability_cells.push_back(cell);
+                }
+                if((i + 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type())) {    //Ð»ÐµÐ²Ð°Ñ Ð½Ð¸Ð¶Ð½ÑÑ Ð´Ð¸Ð°Ð³Ð¾Ð½Ð°Ð»ÑŒ
+                    int* cell = new int[2];
+                    cell[0] = i + 1;
+                    cell[1] = x_cell - 1;
+                    move_ability_cells.push_back(cell);
+                }
+                if((i != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {             //ÐºÐ»ÐµÑ‚ÐºÐ° Ð²Ð½Ð¸Ð·
+                    int* cell = new int[2];
+                    cell[0] = i + 1;
+                    cell[1] = x_cell;
+                    move_ability_cells.push_back(cell);
+                }
             }
         }
         if(y_cell == 1){
             for(auto figura : figures) {
-                if((i + 1 != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {    //2 êëåòêè âíèç
+                if((i + 1 != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {    //2 ÐºÐ»ÐµÑ‚ÐºÐ¸ Ð²Ð½Ð¸Ð·
                     int* cell = new int[2];
                     cell[0] = i + 2;
                     cell[1] = x_cell;

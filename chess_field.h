@@ -1,13 +1,19 @@
+///< @author Yaroslav, Anna , Roman
 //#include "cell.h"
 //#include "BaseFigure.h"
-///< @author Yaroslav Roman Anna
 using namespace std;
 
 class ChessField{
 private:
     Cell* cells[8][8];
     vector<BaseFigure*> figures;
+
     Cell* cell_in_focus = nullptr;
+    BaseFigure* figure_in_focus = nullptr;
+
+    int spase_x = 280;
+    int space_y = 55;
+    int side = 85;
 public:
     ChessField();
     void _add_cells();
@@ -18,12 +24,14 @@ public:
     void draw();
 
     void check_click();
+    void move_figure();
 
 
 };
 
 ChessField::ChessField(){
     _add_cells();
+    _add_figures();
 }
 
 void ChessField::_add_cells(){
@@ -50,12 +58,14 @@ void ChessField::_add_cells(){
 }
 
 void ChessField::_add_figures(){
-    figures.push_back(new Rook(0,0,1));
+    figures.push_back(new Rook(0,0,1,TX_WHITE,TX_BLACK));
     cells[1][0]->set_figure(figures.back());
-    figures.push_back(new Rook(1,5,7));
+    figures.push_back(new Rook(1,5,7,TX_BLACK,TX_WHITE));
     cells[7][5]->set_figure(figures.back());
-    figures.push_back(new Rook(0,5,1));
+    figures.push_back(new Rook(0,5,1,TX_WHITE,TX_BLACK));
     cells[1][5]->set_figure(figures.back());
+    figures.push_back(new Queen(1,3,5,TX_BLACK,TX_WHITE));
+    cells[5][3]->set_figure(figures.back());
 
 }
 
@@ -70,15 +80,15 @@ void ChessField::_draw_field() {
 
 void ChessField::_draw_figures(){
     for(auto figure:figures){
-        Rook* fig = dynamic_cast<Rook*>(figure);
-        figure->draw(figure->get_x_cell()*85+280,figure->get_y_cell()*85+55,4);
+        //Rook* fig = dynamic_cast<Rook*>(figure);
+        /*Knight* fig = dynamic_cast<Knight*>(figure);
+        if(fig){
+            figure->draw(figure->get_x_cell()*side+spase_x,figure->get_y_cell()*side+space_y,1);
+        }
+        else{*/
+        figure->draw(figure->get_x_cell()*side+spase_x,figure->get_y_cell()*side+space_y,4);
+        //}
     }
-}
-
-void ChessField::draw(){
-    _draw_field();
-    _draw_move_ability_cells();
-    _draw_figures();
 }
 
 void ChessField::_draw_move_ability_cells(){
@@ -107,21 +117,54 @@ void ChessField::_draw_move_ability_cells(){
     }
 }
 
+void ChessField::draw(){
+    _draw_field();
+    _draw_move_ability_cells();
+    _draw_figures();
+}
+
 void ChessField::check_click(){
     if(txMouseButtons() & 1){
         int mouse_x = txMouseX();
         int mouse_y = txMouseY();
-        if((mouse_y >= 60 && mouse_x <= 940) && (mouse_x >= 260 && mouse_y <= 740)){
+        if((mouse_y >= 60 && mouse_x < 940) && (mouse_x >= 260 && mouse_y < 740)){
             if(cell_in_focus){
                 cell_in_focus->set_focus(false);
+            }
+            if(figure_in_focus){
+                figure_in_focus = nullptr;
             }
             cell_in_focus = cells[int((mouse_y - 60)/85)][int((mouse_x - 260)/85)];
             cell_in_focus-> set_focus(true);
             if(cell_in_focus->get_figure()){
+                figure_in_focus = cell_in_focus->get_figure();
                 cell_in_focus->get_figure()->count_move_ability_cells(figures);
             }
         }
     }
+}
 
-
+void ChessField::move_figure(){
+    if(figure_in_focus){
+        int chosen_y_cell;
+        int chosen_x_cell;
+        if(txMouseButtons() & 1){
+            int mouse_x = txMouseX();
+            int mouse_y = txMouseY();
+            if((mouse_y >= 60 && mouse_x < 940) && (mouse_x >= 260 && mouse_y < 740)){
+                chosen_y_cell = int((mouse_y - 60)/85);
+                chosen_x_cell = int((mouse_x - 260)/85);
+                for(auto cell:figure_in_focus->get_move_ability_cells()){
+                    if((chosen_y_cell == cell[0]) && (chosen_x_cell == cell[1])){
+                        figure_in_focus->set_y_cell(chosen_y_cell);
+                        figure_in_focus->set_x_cell(chosen_x_cell);
+                        cells[chosen_y_cell][chosen_x_cell]->set_figure(cell_in_focus->get_figure());
+                        //cell_in_focus->set_figure(nullptr);
+                        //cell_in_focus = cells[chosen_y_cell][chosen_x_cell];
+                        return;
+                    }
+                }
+            }
+        }
+    }
 }

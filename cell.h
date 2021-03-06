@@ -1,3 +1,4 @@
+///< @author Yaroslav
 using namespace std;
 
 class Cell{

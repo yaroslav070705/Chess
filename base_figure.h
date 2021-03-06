@@ -1,15 +1,18 @@
-///< @author Yaroslav Roman Anna
+///< @author Yaroslav, Anna , Roman
 using namespace std;
+
 
 class BaseFigure{
 protected:
     int type;
     int x_cell;
     int y_cell;
+    COLORREF side_color;
+    COLORREF main_color;
     //vector <int*> move_ability_cells;
     vector <int*> move_ability_cells;
 public:
-    BaseFigure(int type0, int x_cell0, int y_cell0);
+    BaseFigure(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0);
     void move(int x_cell0, int  y_cell0);
     virtual void count_move_ability_cells(vector<BaseFigure*> figures){}
     virtual void change(){}
@@ -26,7 +29,7 @@ public:
     void set_move_ability_cells(vector <int*> move_ability_cells0);
 };
 
-BaseFigure::BaseFigure(int type0, int x_cell0, int y_cell0): type(type0), x_cell(x_cell0), y_cell(y_cell0){}
+BaseFigure::BaseFigure(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0): type(type0), x_cell(x_cell0), y_cell(y_cell0), main_color(main_color0), side_color(side_color0){}
 
 void BaseFigure::move (int x_cell0, int y_cell0){
     x_cell = x_cell0;

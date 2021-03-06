@@ -1,12 +1,10 @@
 ///< @author Roma
-#include "base_figure.h"
 
-
-class Bishop: public BaseFigure{   ///< êëàññ ëàäüè
+class Bishop: public BaseFigure{   ///< класс ладьи
  public:
-    Bishop(int type0, int x_cell0, int y_cell0) : BaseFigure(type0, x_cell0, y_cell0){}      ///< êîíñòðóêòîð
-    virtual void draw() override{}                                                          ///< ðèñîâàíèå
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;               ///< ïðîñ÷¸ò âîçìîæíîñòè õîäîâ
+    Bishop(int type0, int x_cell0, int y_cell0) : BaseFigure(type0, x_cell0, y_cell0){}      ///< конструктор
+    virtual void draw() override{}                                                           ///< рисование
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;             ///< просчёт возможности ходов
     virtual void change() override{}
     /*void printArray(){
       cout<<"size="<<move_ability_cells.size()<<'\n';
@@ -18,9 +16,9 @@ class Bishop: public BaseFigure{   ///< êëàññ ëàäüè
 };
 
 
-void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
+void Bishop :: count_move_ability_cells(vector<BaseFigure*> figures) {
     bool out = false;
-    for(int i = 1; (y_cell - i >= 1) && (x_cell + i < 9); i++) {   ///< ââåðõ ïðàâî
+    for(int i = 1; (y_cell - i >= 0) && (x_cell + i < 8); i++) {   ///< вверх право
         int* cell = new int[2];
         cell[0] = y_cell - i;
         cell[1] = x_cell + i;
@@ -29,6 +27,9 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
 
         for(auto figura : figures) {
             if((figura->get_y_cell() == (y_cell - i)) && (figura->get_x_cell() == (x_cell + i))) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
                    out = true;
                    break;
             }
@@ -39,7 +40,7 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
     }
 
     out = false;
-    for(int i = 1; (y_cell - i >= 1) && (x_cell - i >= 1); i++) {   ///< ââåðõ ëåâî
+    for(int i = 1; (y_cell - i >= 0) && (x_cell - i >= 0); i++) {   ///< вверх лево
         int* cell = new int[2];
         cell[0] = y_cell - i;
         cell[1] = x_cell - i;
@@ -48,6 +49,9 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
 
         for(auto figura : figures) {
             if((figura->get_y_cell() == (y_cell - i)) && (figura->get_x_cell() == (x_cell - i))) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
                    out = true;
                    break;
             }
@@ -57,7 +61,7 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     out = false;
-    for(int i = 1; (y_cell + i < 9) && (x_cell + i < 9); i++) {   ///< ââåðõ ïðàâî
+    for(int i = 1; (y_cell + i < 8) && (x_cell + i < 8); i++) {   ///< вверх право
         int* cell = new int[2];
         cell[0] = y_cell + i;
         cell[1] = x_cell + i;
@@ -66,6 +70,9 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
 
         for(auto figura : figures) {
             if((figura->get_y_cell() == (y_cell + i)) && (figura->get_x_cell() == (x_cell + i))) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
                    out = true;
                    break;
             }
@@ -75,7 +82,7 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     out = false;
-    for(int i = 1; (y_cell + i < 9) && (x_cell - i >= 1); i++) {   ///< âíèç âëåâî
+    for(int i = 1; (y_cell + i < 8) && (x_cell - i >= 0); i++) {   ///< вниз влево
         int* cell = new int[2];
         cell[0] = y_cell + i;
         cell[1] = x_cell - i;
@@ -84,6 +91,9 @@ void Bishop::count_move_ability_cells(vector<BaseFigure*> figures) {
 
         for(auto figura : figures) {
             if((figura->get_y_cell() == (y_cell + i)) && (figura->get_x_cell() == (x_cell - i))) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
                    out = true;
                    break;
             }
