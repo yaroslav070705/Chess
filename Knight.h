@@ -1,50 +1,85 @@
-///< @author Yaroslav,Stepan,Timofey
+///< @file Knight.h
 //#ifndef Knight
 //#define Knight
-class Knight : public BaseFigure{    ///< класс коня
-public:
-    Knight(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}      ///< конструктор
-    virtual void draw(int type0, int x_cell0, int y_cell0) override;                                                           ///< рисование
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;             ///< просчёт возможности ходов
+
+/**
+ @author Yaroslav, Stepan, Timofey
+
+ Knight - класс фигуры коня;
+
+ Потомок класса BaseFigure.
+*/
+class Knight : public BaseFigure{
+ public:
+    /// конструктор
+    Knight(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}
+
+    virtual void draw(int x, int y, int r) override;                                         // рисование
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;             // просчёт возможности ходов
     virtual void change() override{}
 };
-
+/**
+ Функция рисования коня;
+ \param x  - координата коня по оси x;
+ \param y  - координата коня по оси y;
+ \param r  - размер коня.
+ */
 void Knight::draw(int x, int y, int r){
     txSetFillColor (main_color);
-    txSetColor (side_color, 5*r);
+    txSetColor (side_color, 2);
 
     txSetFillColor (main_color);
-    POINT Knight[14] = {{r *  400  + x, r *  300   + y},     //тело без ушей
-                        {r *  300  + x, r *  500   + y},
-                        {r *  350 + x, r *  600   + y},
-                        {r *  400  + x, r *  600   + y},
-                        {r *  500  + x, r *  500   + y},
-                        {r *  500  + x, r *  600   + y},
-                        {r *  400  + x, r *  750  + y},
-                        {r *  400  + x, r *  800   + y},
-                        {r *  750 + x, r *  800   + y},
-                        {r *  700  + x, r *  550  + y},
-                        {r *  650 + x, r *  450  + y},
-                        {r *  550 + x, r *  350  + y},
-                        {r *  450 + x, r *  300   + y},
-                        {r *  400  + x, r *  300   + y}};
-    txPolygon  (Knight, 14);
+    POINT Knight[13] = {{r *  3  /2 + x, r *  42   /2 + y},     // тело без ушей
+                        {r *  19  /2 + x, r *  42   /2 + y},
+                        {r *  18 /2 + x, r *  22   /2 + y},
+                        {r *  17  /2 + x, r *  15   /2 + y},
+                        {r *  15  /2 + x, r *  8   /2 + y},
+                        {r *  13  /2 + x, r *  6   /2 + y},
+                        {r *  7  /2 + x, r *  6  /2 + y},
+                        {r *  0  /2 + x, r *  19  /2 + y},
+                        {r *  2 /2 + x, r *  23   /2 + y},
+                        {r *  5  /2 + x, r *  23  /2 + y},
+                        {r *  10 /2 + x, r *  17  /2 + y},
+                        {r *  10 /2 + x, r *  23  /2 + y},
+                        {r *  3 /2 + x, r *  40   /2 + y}};
+    txPolygon  (Knight, 13);
 
     txSetFillColor (main_color);
-    POINT Ears[7] = {{r *  400  + x, r *  300    + y},      //уши
-                     {r *  450 + x, r *  200    + y},
-                     {r *  500  + x, r * 325  + y},
-                     {r *  550 + x, r *  200    + y},
-                     {r *  600  + x, r *  400    + y},
-                     {r *  550 + x, r *  350   + y},
-                     {r *  450 + x, r *  300    + y}};
-    txPolygon  (Ears, 7);
+    POINT Ears[5] = {{r *  7  /2 + x, r *  6    /2 + y},      //уши
+                     {r *  9 /2 + x, r *  0    /2 + y},
+                     {r *  10  /2 + x, r * 6  /2 + y},
+                     {r *  12 /2 + x, r *  0    /2 + y},
+                     {r *  13  /2 + x, r *  6    /2 + y}};
+    txPolygon  (Ears, 5);
 
-    txSetColor (side_color, 5*r);
-    txLine (r *  350 + x, r *  600 + y, r *  400 + x, r *  550 + y);    //полоска рта
+    POINT stand1[4] = {{(2*r/2)+x, (42*r/2)+y}, {(20*r/2)+x, (42*r/2)+y}, {(20*r/2)+x, (44*r/2)+y}, {(2*r/2)+x, (44*r/2)+y}}; //первая подставка для всех, а у пешек только она
+    txPolygon (stand1, 4);
+
+    POINT stand2[4] = {{(0*r/2)+x, (44*r/2)+y}, {(22*r/2)+x, (44*r/2)+y}, {(22*r/2)+x, (46*r/2)+y}, {(0*r/2)+x, (46*r/2)+y}}; //вторая подставка для средних(ладья,слон,конь) и лучших
+    txPolygon (stand2, 4);
+
+    txSetColor (side_color, 2);
+    txLine (r *  2 /2 + x, r *  23 /2 + y, r *  5 /2 + x, r *  20 /2 + y);    //полоска рта
+
+    txSetFillColor (TX_RED);
+    //txSetFillColor (colorEYES_FOR_WHITE_FROG_IN_SWOON);
+    txCircle(8/2*r + x,12/2*r + y,2/2 *r);
+
+    txSetFillColor (RGB(255,255,255));
+    txCircle(8/2*r + x,12/2*r + y,1/2 *r);
 }
+/**
+ Функция просчёта возможности хода;
 
+ \param figures  - вектор фигур.
+
+ Конь ходит и ест на два поля по горизонтали или по вертикали, и на одну клетку перпендикулярную первоначальному направлению;
+
+ Конь может "перепрыгивать" через другие фигуры;
+
+*/
 void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
+    move_ability_cells.clear();
     if(y_cell > 1){
         if(x_cell > 0){
             int* cell = new int[2];
@@ -52,6 +87,14 @@ void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
             cell[1] = x_cell - 1;
 
             move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
+                   break;
+                }
+            }
         }
         if(x_cell < 7){
             int* cell = new int[2];
@@ -59,6 +102,14 @@ void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
             cell[1] = x_cell + 1;
 
             move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
+                   break;
+                }
+            }
         }
     }
 
@@ -69,6 +120,14 @@ void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
             cell[1] = x_cell - 2;
 
             move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
+                   break;
+                }
+            }
         }
         if(x_cell < 6){
             int* cell = new int[2];
@@ -76,6 +135,14 @@ void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
             cell[1] = x_cell + 2;
 
             move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
+                   break;
+                }
+            }
         }
     }
 
@@ -86,6 +153,14 @@ void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
             cell[1] = x_cell - 2;
 
             move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
+                   break;
+                }
+            }
         }
         if(x_cell < 6){
             int* cell = new int[2];
@@ -93,6 +168,14 @@ void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
             cell[1] = x_cell + 2;
 
             move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
+                   break;
+                }
+            }
         }
     }
 
@@ -103,6 +186,14 @@ void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
             cell[1] = x_cell - 1;
 
             move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
+                   break;
+                }
+            }
         }
         if(x_cell < 7){
             int* cell = new int[2];
@@ -110,6 +201,14 @@ void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
             cell[1] = x_cell + 1;
 
             move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                   if(type == figura->get_type()){
+                        move_ability_cells.pop_back();
+                   }
+                   break;
+                }
+            }
         }
     }
 }
