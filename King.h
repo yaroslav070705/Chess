@@ -1,8 +1,7 @@
 ///< @author Roma,Timofey,Yaroslav
 
 
-class King:
- public BaseFigure{   ///< класс короля
+class King: public BaseFigure{   ///< класс короля
     King(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}      ///< конструктор
     virtual void draw(int type0, int x_cell0, int y_cell0) override;                                                          ///< рисование
     virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;               ///< просчёт возможности ходов
@@ -58,6 +57,7 @@ void King::draw(int x, int y, int r){
 }
 
 void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
+    bool out = false;
     if((x_cell+1) < 8 && (y_cell-1) >= 0)
     {                                           ///< вверх право
         int* cell = new int[2];
