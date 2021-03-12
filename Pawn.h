@@ -1,13 +1,27 @@
-///< @author Anna,Artiom,Timofey
+///< @file Pawn.h
 
-class Pawn: public BaseFigure{   ///< класс пешки
+/**
+ @author Anna, Artiom, Timofey
+
+ Pawn - класс фигуры пешки
+
+ Потомок класса BaseFigure
+*/
+class Pawn: public BaseFigure{
  public:
-    Pawn(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}      ///< конструктор
-    virtual void draw(int x, int y, int r) override;                                      ///< рисование
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;           ///< просчёт возможности ходов
+    /// конструктор
+    Pawn(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}
+
+    virtual void draw(int x, int y, int r) override;                                      // рисование
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;          // просчёт возможности ходов
     virtual void change() override{}
 };
-
+/**
+ Функция рисования пешки;
+ \param x  - координата пешки по оси x;
+ \param y  - координата пешки по оси y;
+ \param r  - размер пешки.
+ */
 void Pawn::draw(int x, int y, int r){
     txSetColor(side_color,2);
     txSetFillColor(main_color);
@@ -18,78 +32,99 @@ void Pawn::draw(int x, int y, int r){
                      {1 * r + x, 1 * r + y}, {2 * r + x, 0 * r + y}};
     txPolygon (pawn, 18);
 }
+/**
+ Функция просчёта возможности хода;
 
+ \param figures  - вектор фигур.
+
+ Пешка ходит на одну клетку вперёд, а в свой первый ход может пойти и на две клетки ;
+
+ Ест пешка по диагонали на одно поле и только вперёд;
+ */
 void Pawn :: count_move_ability_cells(vector<BaseFigure*> figures) {
+    move_ability_cells.clear();
     if(type == 0) {     // белая
         int i = y_cell;
         if(y_cell != 0){
             for(auto figura : figures) {
-                if((i - 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type())) {     //правая верхняя диагональ
+                if((i - 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 7)) {     // правая верхняя диагональ
                     int* cell = new int[2];
                     cell[0] = i - 1;
                     cell[1] = x_cell + 1;
                     move_ability_cells.push_back(cell);
                 }
-                if((i - 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type())) {     //левая верхняя диагональ
+                if((i - 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 0)) {     // левая верхняя диагональ
                     int* cell = new int[2];
                     cell[0] = i - 1;
                     cell[1] = x_cell - 1;
                     move_ability_cells.push_back(cell);
                 }
-                if((i - 1 != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {                                         //клетка вверх
-                    int* cell = new int[2];
-                    cell[0] = i-1;
-                    cell[1] = x_cell;
-                    move_ability_cells.push_back(cell);
-                }
             }
-        }
-        if(y_cell == 6){
+            int* cell = new int[2];
+            cell[0] = i - 1;                         // клетка вверх
+            cell[1] = x_cell;
+            move_ability_cells.push_back(cell);
             for(auto figura : figures) {
-                if((i - 1 != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {      //2 клетки вверх
-                    int* cell = new int[2];
-                    cell[0] = i - 2;
-                    cell[1] = x_cell;
-                    move_ability_cells.push_back(cell);
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                    move_ability_cells.pop_back();
+                    break;
                 }
             }
         }
-
+        if(y_cell == 6){                             // 2 клетки вверх
+            int* cell = new int[2];
+            cell[0] = i - 2;
+            cell[1] = x_cell;
+            move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                    move_ability_cells.pop_back();
+                    break;
+                }
+            }
+        }
     }
-    if(type == 1) {     // чёрная
+    if(type == 1) {     //  чёрная
         int i = y_cell;
         if(y_cell != 7){
             for(auto figura : figures) {
-                if((i + 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type())) {    //правая нижняя диагональ
+                if((i + 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 7)) {    // правая нижняя диагональ
                     int* cell = new int[2];
                     cell[0] = i + 1;
                     cell[1] = x_cell + 1;
                     move_ability_cells.push_back(cell);
                 }
-                if((i + 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type())) {    //левая нижняя диагональ
+                if((i + 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 0)) {    // левая нижняя диагональ
                     int* cell = new int[2];
                     cell[0] = i + 1;
                     cell[1] = x_cell - 1;
                     move_ability_cells.push_back(cell);
                 }
-                if((i != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {             //клетка вниз
-                    int* cell = new int[2];
-                    cell[0] = i + 1;
-                    cell[1] = x_cell;
-                    move_ability_cells.push_back(cell);
+            }
+            int* cell = new int[2];
+            cell[0] = i + 1;                         // клетка вниз
+            cell[1] = x_cell;
+            move_ability_cells.push_back(cell);
+            for(auto figura : figures) {
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                    move_ability_cells.pop_back();
+                    break;
                 }
             }
         }
         if(y_cell == 1){
+            int* cell = new int[2];
+            cell[0] = i + 2;                        // 2 клетки вниз
+            cell[1] = x_cell;
+            move_ability_cells.push_back(cell);
             for(auto figura : figures) {
-                if((i + 1 != figura->get_y_cell()) && (x_cell != figura->get_x_cell())) {    //2 клетки вниз
-                    int* cell = new int[2];
-                    cell[0] = i + 2;
-                    cell[1] = x_cell;
-                    move_ability_cells.push_back(cell);
+                if((figura->get_y_cell() == move_ability_cells.back()[0]) && (figura->get_x_cell() == move_ability_cells.back()[1])) {
+                    move_ability_cells.pop_back();
+                    break;
                 }
             }
         }
     }
 
 }
+
