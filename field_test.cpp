@@ -23,7 +23,7 @@ int main(){
         //txSetFillColor(RGB(3, 171, 255));
         txClear();
         txBitBlt(txDC(),0,0,1200,800,bg,0,0);
-        field.check_click1();
+        field.check_click();
         //field.move_figure();
 
         field.draw();
