@@ -222,33 +222,45 @@ void ChessField::_draw_dead_figures(){
     Queen* queen;
     Pawn* pawn;
     Knight* knight;
-    int count_white = 0;
-    int count_black = 0;
+    Rook* rook;
+    int count_white_pawns = 0;
+    int count_white_bishops = 0;
+    int count_white_knights = 0;
+    int count_white_rooks = 0;
+
+    int count_black_pawns = 0;
+    int count_black_bishops = 0;
+    int count_black_knights = 0;
+    int count_black_rooks = 0;
     for(auto figure:white_dead_figures){
         king = dynamic_cast<King*>(figure);
         bishop = dynamic_cast<Bishop*>(figure);
         queen = dynamic_cast<Queen*>(figure);
         pawn = dynamic_cast<Pawn*>(figure);
         knight = dynamic_cast<Knight*>(figure);
+        rook = dynamic_cast<Rook*>(figure);
         if(king){
-            figure->draw(10 + count_white*5,100,2);
+            figure->draw(10,450,2);
         }
         else if(queen){
-            figure->draw(10 + count_white*5,100,4);
+            figure->draw(80,450,4);
         }
         else if(bishop){
-            figure->draw(10 + count_white*20,400,5);
+            figure->draw(20 + count_white_bishops*60,400,5);
+            count_white_bishops += 1;
         }
         else if(pawn){
-            figure->draw(30 + count_white*5,100,5);
+            figure->draw(10 + count_white_pawns*10,100,5);
+            count_white_pawns += 1;
         }
         else if(knight){
-            figure->draw(10 + count_white*20,200,5);
+            figure->draw(10 + count_white_knights*50,200,5);
+            count_white_knights += 1;
         }
-        else{
-            figure->draw(10 + count_white*5,100,4);
+        else if(rook){
+            figure->draw(10 + count_white_rooks*60,600,4);
+            count_white_rooks += 1;
         }
-        count_white += 1;
     }
     for(auto figure:black_dead_figures){
         king = dynamic_cast<King*>(figure);
@@ -256,25 +268,29 @@ void ChessField::_draw_dead_figures(){
         queen = dynamic_cast<Queen*>(figure);
         pawn = dynamic_cast<Pawn*>(figure);
         knight = dynamic_cast<Knight*>(figure);
+        rook = dynamic_cast<Rook*>(figure);
         if(king){
-            figure->draw(1000 + count_black*5,100,2);
+            figure->draw(1000,450,2);
         }
         else if(queen){
-            figure->draw(1000 + count_black*5,100,4);
+            figure->draw(1080,450,4);
         }
         else if(bishop){
-            figure->draw(1010 + count_black*20,400,5);
+            figure->draw(1020 + count_black_bishops*60,400,5);
+            count_black_bishops += 1;
         }
         else if(pawn){
-            figure->draw(1000 + count_black*5,100,5);
+            figure->draw(1000 + count_black_pawns*10,100,5);
+            count_black_pawns += 1;
         }
         else if(knight){
-            figure->draw(980 + count_black*20,200,5);
+            figure->draw(1000 + count_black_knights*50,200,5);
+            count_black_knights += 1;
         }
-        else{
-            figure->draw(1000 + count_black*5,100,4);
+        else if(rook){
+            figure->draw(1010 + count_black_rooks*60,600,4);
+            count_black_rooks += 1;
         }
-        count_black += 1;
     }
 }
 
