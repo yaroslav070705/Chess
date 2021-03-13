@@ -199,4 +199,18 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
             }
         }
     }
+ /*if((y_cell == 7) && (x_cell == 4)){
+        Rook* rook;
+        for(auto figura : figures) {
+            rook = dynamic_cast<Rook*>(figura);
+            if( ( (figura->get_y_cell() != (y_cell)) && (figura->get_x_cell() != (x_cell + 1)) )
+            && ( (figura->get_y_cell() != (y_cell)) && (figura->get_x_cell() != (x_cell + 2)) )
+            && ( ((figura->get_y_cell() == (y_cell)) && (figura->get_x_cell() == (x_cell + 3)) ) && (rook) && (figura->get_type() == type) ) ) {
+                int* cell = new int[2];
+                cell[0] = y_cell;
+                cell[1] = x_cell + 3;
+                move_ability_cells.push_back(cell);
+            }
+        }
+    } */
 }
