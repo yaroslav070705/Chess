@@ -1,26 +1,13 @@
-///< @file Queen.h
+///< @author Roma,Timofey
 
-/**
- @author Roma, Timofey
-
- Queen - –∫–ª–∞—Å—Å —Ñ–∏–≥—É—Ä—ã –∫–æ—Ä–æ–ª–µ–≤—ã;
-
- –ü–æ—Ç–æ–º–æ–∫ –∫–ª–∞—Å—Å–∞ BaseFigure.
-*/
-class Queen: public BaseFigure{
+class Queen: public BaseFigure{   ///< ÍÎ‡ÒÒ ÙÂÁˇ
  public:
-    /// –∫–æ–Ω—Å—Ç—Ä—É–∫—Ç–æ—Ä
-    Queen(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}
-    virtual void draw(int x, int y, int r) override;                                           // —Ä–∏—Å–æ–≤–∞–Ω–∏–µ
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;               // –ø—Ä–æ—Å—á—ë—Ç –≤–æ–∑–º–æ–∂–Ω–æ—Å—Ç–∏ —Ö–æ–¥–æ–≤
+    Queen(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}      ///< ÍÓÌÒÚÛÍÚÓ
+    virtual void draw(int x, int y, int r) override;                                           ///< ËÒÓ‚‡ÌËÂ
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;               ///< ÔÓÒ˜∏Ú ‚ÓÁÏÓÊÌÓÒÚË ıÓ‰Ó‚
     virtual void change() override{}
 };
-/**
- –§—É–Ω–∫—Ü–∏—è —Ä–∏—Å–æ–≤–∞–Ω–∏—è –∫–æ—Ä–æ–ª–µ–≤—ã;
- \param x  - –∫–æ–æ—Ä–¥–∏–Ω–∞—Ç–∞ –∫–æ—Ä–æ–ª–µ–≤—ã –ø–æ –æ—Å–∏ x;
- \param y  - –∫–æ–æ—Ä–¥–∏–Ω–∞—Ç–∞ –∫–æ—Ä–æ–ª–µ–≤—ã –ø–æ –æ—Å–∏ y;
- \param r  - —Ä–∞–∑–º–µ—Ä –∫–æ—Ä–æ–ª–µ–≤—ã.
- */
+
 void Queen::draw(int x, int y, int r){
     txSetColor(side_color ,2);
     txSetFillColor (main_color);
@@ -32,33 +19,26 @@ void Queen::draw(int x, int y, int r){
                       {((6)*r)+x, ((10)*r)+y}, {((5)*r)+x, ((10)*r)+y}, {((4)*r)+x, ((8)*r)+y},
                       {((4)*r)+x, ((6)*r)+y}, {((5)*r)+x, ((6)*r)+y}, {((5)*r)+x, ((5)*r)+y},
                       {((3)*r)+x, ((4)*r)+y}, {((5)*r)+x, ((4)*r)+y}, {((5)*r)+x, ((2)*r)+y},
-                      {((4)*r)+x, ((2)*r)+y}, {((4)*r)+x, ((1)*r)+y}, {((5)*r)+x, ((1)*r)+y}}; // "–≥–æ–ª–æ–≤–∞", –º–µ–Ω—è–µ—Ç—Å—è –≤ –∑–∞–≤–∏—Å–∏–º–æ—Å—Ç–∏ –æ—Ç —Ñ–∏–≥—É—Ä—ã
+                      {((4)*r)+x, ((2)*r)+y}, {((4)*r)+x, ((1)*r)+y}, {((5)*r)+x, ((1)*r)+y}}; ///< "„ÓÎÓ‚‡", ÏÂÌˇÂÚÒˇ ‚ Á‡‚ËÒËÏÓÒÚË ÓÚ ÙË„Û˚
     txPolygon (head, 24);
 
-    POINT body[4] = {{(5*r)+x, (10*r)+y}, {(6*r)+x, (10*r)+y}, {(8*r)+x, (20*r)+y}, {(3*r)+x, (20*r)+y}}; // –Ω–µ–∏–∑–º–µ–Ω—è–µ–º–æ–µ —Ç–µ–ª–æ
+    POINT body[4] = {{(5*r)+x, (10*r)+y}, {(6*r)+x, (10*r)+y}, {(8*r)+x, (20*r)+y}, {(3*r)+x, (20*r)+y}}; ///< ÌÂËÁÏÂÌˇÂÏÓÂ ÚÂÎÓ
     txPolygon (body, 4);
 
-    POINT stand1[4] = {{(2*r)+x, (20*r)+y}, {(9*r)+x, (20*r)+y}, {(9*r)+x, (21*r)+y}, {(2*r)+x, (21*r)+y}}; // –ø–µ—Ä–≤–∞—è –ø–æ–¥—Å—Ç–∞–≤–∫–∞ –¥–ª—è –≤—Å–µ—Ö, –∞ —É –ø–µ—à–µ–∫ —Ç–æ–ª—å–∫–æ –æ–Ω–∞
+    POINT stand1[4] = {{(2*r)+x, (20*r)+y}, {(9*r)+x, (20*r)+y}, {(9*r)+x, (21*r)+y}, {(2*r)+x, (21*r)+y}}; ///< ÔÂ‚‡ˇ ÔÓ‰ÒÚ‡‚Í‡ ‰Îˇ ‚ÒÂı, ‡ Û ÔÂ¯ÂÍ ÚÓÎ¸ÍÓ ÓÌ‡
     txPolygon (stand1, 4);
 
-    POINT stand2[4] = {{(1*r)+x, (21*r)+y}, {(10*r)+x, (21*r)+y}, {(10*r)+x, (22*r)+y}, {(1*r)+x, (22*r)+y}}; // –≤—Ç–æ—Ä–∞—è –ø–æ–¥—Å—Ç–∞–≤–∫–∞ –¥–ª—è —Å—Ä–µ–¥–Ω–∏—Ö(–ª–∞–¥—å—è,—Å–ª–æ–Ω,–∫–æ–Ω—å) –∏ –ª—É—á—à–∏—Ö
+    POINT stand2[4] = {{(1*r)+x, (21*r)+y}, {(10*r)+x, (21*r)+y}, {(10*r)+x, (22*r)+y}, {(1*r)+x, (22*r)+y}}; ///< ‚ÚÓ‡ˇ ÔÓ‰ÒÚ‡‚Í‡ ‰Îˇ ÒÂ‰ÌËı(Î‡‰¸ˇ,ÒÎÓÌ,ÍÓÌ¸) Ë ÎÛ˜¯Ëı
     txPolygon (stand2, 4);
 
-    POINT stand3[4] = {{(0*r)+x, (22*r)+y}, {(11*r)+x, (22*r)+y}, {(11*r)+x, (23*r)+y}, {(0*r)+x, (23*r)+y}};// —Ç—Ä–µ—Ç—å—è –ø–æ–¥—Å—Ç–∞–≤–∫–∞ –¥–ª—è –ª—É—á—à–∏—Ö(—Ñ–µ—Ä–∑–µ–π, –∫–æ—Ä–æ–ª–µ–π)
+    POINT stand3[4] = {{(0*r)+x, (22*r)+y}, {(11*r)+x, (22*r)+y}, {(11*r)+x, (23*r)+y}, {(0*r)+x, (23*r)+y}};///< ÚÂÚ¸ˇ ÔÓ‰ÒÚ‡‚Í‡ ‰Îˇ ÎÛ˜¯Ëı(ÙÂÁÂÈ, ÍÓÓÎÂÈ)
     txPolygon (stand3, 4);
 }
-/**
- –§—É–Ω–∫—Ü–∏—è –ø—Ä–æ—Å—á—ë—Ç–∞ –≤–æ–∑–º–æ–∂–Ω–æ—Å—Ç–∏ —Ö–æ–¥–∞;
 
- \param figures  - –≤–µ–∫—Ç–æ—Ä —Ñ–∏–≥—É—Ä.
-
- –ö–æ—Ä–æ–ª–µ–≤–∞ —Ö–æ–¥–∏—Ç –∏ –µ—Å—Ç –≤ –ª—é–±—É—é —Å—Ç–æ—Ä–æ–Ω—É –Ω–∞ –ª—é–±–æ–µ –∫–æ–ª–ª–∏—á–µ—Å—Ç–≤–æ –∫–ª–µ—Ç–æ–∫;
-
-*/
 void Queen :: count_move_ability_cells(vector<BaseFigure*> figures) {
     move_ability_cells.clear();
     bool out = false;
-    for(int i = 1; (y_cell - i >= 0) && (x_cell + i < 8); i++) {   // –≤–≤–µ—Ä—Ö –ø—Ä–∞–≤–æ
+    for(int i = 1; (y_cell - i >= 0) && (x_cell + i < 8); i++) {   ///< ‚‚Âı Ô‡‚Ó
         int* cell = new int[2];
         cell[0] = y_cell - i;
         cell[1] = x_cell + i;
@@ -80,7 +60,7 @@ void Queen :: count_move_ability_cells(vector<BaseFigure*> figures) {
     }
 
     out = false;
-    for(int i = 1; (y_cell - i >= 0) && (x_cell - i >= 0); i++) {  // –≤–≤–µ—Ä—Ö –ª–µ–≤–æ
+    for(int i = 1; (y_cell - i >= 0) && (x_cell - i >= 0); i++) {  ///< ‚‚Âı ÎÂ‚Ó
         int* cell = new int[2];
         cell[0] = y_cell - i;
         cell[1] = x_cell - i;
@@ -101,7 +81,7 @@ void Queen :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     out = false;
-    for(int i = 1; (y_cell + i < 8) && (x_cell + i < 8); i++) {    // –≤–≤–µ—Ä—Ö –ø—Ä–∞–≤–æ
+    for(int i = 1; (y_cell + i < 8) && (x_cell + i < 8); i++) {    ///< ‚‚Âı Ô‡‚Ó
         int* cell = new int[2];
         cell[0] = y_cell + i;
         cell[1] = x_cell + i;
@@ -122,7 +102,7 @@ void Queen :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     out = false;
-    for(int i = 1; (y_cell + i < 8) && (x_cell - i >= 0); i++) {   // –≤–Ω–∏–∑ –≤–ª–µ–≤–æ
+    for(int i = 1; (y_cell + i < 8) && (x_cell - i >= 0); i++) {   ///< ‚ÌËÁ ‚ÎÂ‚Ó
         int* cell = new int[2];
         cell[0] = y_cell + i;
         cell[1] = x_cell - i;
@@ -144,7 +124,7 @@ void Queen :: count_move_ability_cells(vector<BaseFigure*> figures) {
     }
 
     out = false;
-    for(int i = y_cell-1; i >= 0; i--) {            // –≤–≤–µ—Ä—Ö
+    for(int i = y_cell-1; i >= 0; i--) {            ///< ‚‚Âı
         int* cell = new int[2];
         cell[0] = i;
         cell[1] = x_cell;
@@ -166,7 +146,7 @@ void Queen :: count_move_ability_cells(vector<BaseFigure*> figures) {
     }
 
     out = false;
-    for(int i = y_cell+1; i <= 7; i++) {             // –≤–Ω–∏–∑
+    for(int i = y_cell+1; i <= 7; i++) {             ///< ‚ÌËÁ
         int* cell = new int[2];
         cell[0] = i;
         cell[1] = x_cell;
@@ -188,7 +168,7 @@ void Queen :: count_move_ability_cells(vector<BaseFigure*> figures) {
     }
 
     out = false;
-    for(int j = x_cell-1; j >= 0; j--) {             // –≤–ª–µ–≤–æ
+    for(int j = x_cell-1; j >= 0; j--) {             ///< ‚ÎÂ‚Ó
         int* cell = new int[2];
         cell[0] = y_cell;
         cell[1] = j;
@@ -210,7 +190,7 @@ void Queen :: count_move_ability_cells(vector<BaseFigure*> figures) {
     }
 
     out = false;
-    for(int j = x_cell+1; j <= 7; j++) {             // –≤–ø—Ä–∞–≤–æ
+    for(int j = x_cell+1; j <= 7; j++) {             ///< ‚Ô‡‚Ó
         int* cell = new int[2];
         cell[0] = y_cell;
         cell[1] = j;

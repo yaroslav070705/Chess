@@ -16,6 +16,11 @@ class ChessField{  ///< класс пол€
     int spase_x = 280;                      ///< отступ по x
     int space_y = 55;                       ///< отступ по y
     int side = 85;                          ///< толщина
+
+
+    int turn = 0;
+    int win_side;
+    bool turn_changed = false;
  public:
     ChessField();                           ///< конструктор
     void _add_cells();                      ///< добавление клеток
@@ -28,7 +33,12 @@ class ChessField{  ///< класс пол€
 
    // void check_click();                     ///< проверка нажати€ на клетку
    // void move_figure();                     ///< передвижение фигуры
-    void check_click();
+    bool check_click();
+
+    //void pawn_to_queen();
+
+
+    void end(bool end_game);
 
 
 };
@@ -368,7 +378,8 @@ void ChessField::move_figure(){
 
 } */
 
-void ChessField::check_click(){
+bool ChessField::check_click(){
+    King* king = nullptr;
     if(txMouseButtons() & 1){
         while(txMouseButtons() & 1){
         }
@@ -378,36 +389,60 @@ void ChessField::check_click(){
             int chosen_y_cell = int((mouse_y - 60)/85);
             int chosen_x_cell = int((mouse_x - 260)/85);
  ////////////////////////////////////////////////////
+            /*if(cells[chosen_y_cell][chosen_x_cell]->get_figure()){
+                if(cells[chosen_y_cell][chosen_x_cell]->get_figure()->get_type() == turn){*/
+
             if(cell_in_focus){
                 cell_in_focus->set_focus(false);
             }
   ///////////////////////////
             if(figure_in_focus){
-                for(auto cell:figure_in_focus->get_move_ability_cells()){
-                    if((chosen_y_cell == cell[0]) && (chosen_x_cell == cell[1])){
-                        figure_in_focus->set_y_cell(chosen_y_cell);
-                        figure_in_focus->set_x_cell(chosen_x_cell);
+                if(figure_in_focus->get_type() == turn){
 
-                        //if(cells[chosen_y_cell][chosen_x_cell]){ //
-                        for(int i = 0; i < figures.size(); i++){
-                            if(figures[i] == cells[chosen_y_cell][chosen_x_cell]->get_figure()){
-                                //delete figures[i];
-                                if(figures[i]->get_type() == 0){
-                                    white_dead_figures.push_back(figures[i]);
-                                }
-                                else{
-                                    black_dead_figures.push_back(figures[i]);
-                                }
-                                figures.erase(figures.begin() + i);
-                                break;
+                    for(auto cell:figure_in_focus->get_move_ability_cells()){
+                        if((chosen_y_cell == cell[0]) && (chosen_x_cell == cell[1])){
+                            figure_in_focus->set_y_cell(chosen_y_cell);
+                            figure_in_focus->set_x_cell(chosen_x_cell);
+
+                            if(turn == 0){
+                                turn = 1;
                             }
-                        }
-                       // }
+                            else{
+                                turn = 0;
+                            }
+                            //turn_changed = true;
 
-                        cells[chosen_y_cell][chosen_x_cell]->set_figure(cell_in_focus->get_figure());
-                        cell_in_focus->set_figure(nullptr);
-                        cell_in_focus = cells[chosen_y_cell][chosen_x_cell];
-                        break;
+                            //if(cells[chosen_y_cell][chosen_x_cell]){ //
+                            for(int i = 0; i < figures.size(); i++){
+                                if(figures[i] == cells[chosen_y_cell][chosen_x_cell]->get_figure()){
+                                    //delete figures[i];
+                                    if(figures[i]->get_type() == 0){
+                                        white_dead_figures.push_back(figures[i]);
+                                    }
+                                    else{
+                                        black_dead_figures.push_back(figures[i]);
+                                    }
+                                    king = dynamic_cast<King*>(figures[i]);
+                                    if(figures[i]->get_type() == 0){
+                                        win_side = 1;
+                                    }
+                                    else{
+                                        win_side = 0;
+                                    }
+                                    figures.erase(figures.begin() + i);
+                                    break;
+                                }
+                            }
+                           // }
+
+                            cells[chosen_y_cell][chosen_x_cell]->set_figure(cell_in_focus->get_figure());
+                            cell_in_focus->set_figure(nullptr);
+                           // cell_in_focus = cells[chosen_y_cell][chosen_x_cell];
+                            break;
+                        }
+                        /*else{
+                            turn_changed = false;
+                        } */
                     }
                 }
             }
@@ -415,11 +450,76 @@ void ChessField::check_click(){
             cell_in_focus-> set_focus(true);
             if(cell_in_focus->get_figure()){
                 figure_in_focus = cell_in_focus->get_figure();
+                //if(!turn_changed){
                 cell_in_focus->get_figure()->count_move_ability_cells(figures);
+                //}
             }
             else{
                 figure_in_focus = nullptr;
             }
+            if(king){
+                return true;
+            }
+            return false;
         }
     }
 }
+
+/*void ChessField::pawn_to_queen(){ ///< \parametr pOther - массив фигур
+    bool broken = false; ///< ѕеременна€ отвечающа€ за то побита€ фигура или нет (когда пешка становитс€ ферзем она не должна попадать в битые фигуры), изначально true
+    bool queen = false; ///< ѕеременна€ отвечающа€ за то выбран ли ферзь
+
+
+    auto pPawn = dynamic_cast<Pawn*>(figures); ///< создаем указатель
+    if pPawn ///< если пешка
+    {
+        int y = pPawn->get_y_cell()
+        int x = pPawn->get_x_cell()
+
+        if(y == 0) ///< если пешка имеет координату y == 0
+        {
+            if queen ///< если выбран ферзь
+            {
+                /// —оздаем ‘ерз€ на месте пешки
+                figures.push_back(new Queen(0, x, 0));
+                cells[0][x]->set_figure(figures.back());
+            }
+        }
+        else if(y == 7) ///< если пешка i имеет координату y == 7
+        {
+            if queen ///< если выбран ферзь
+            {
+                /// —оздаем ‘ерз€ на месте пешки
+                figures.push_back(new Queen(1, x, 7));
+                cells[7][x]->set_figure(figures.back());
+            }
+        }
+    }
+} */
+
+void ChessField::end(bool end_game){
+    txSetFillColor(RGB(0, 191, 255));
+    txSelectFont("Impact",100);
+    txClear();
+    if(end_game){
+        if(win_side == 0){
+            int x_cor = txGetTextExtentX("White side Win");
+            int y_cor = txGetTextExtentY("White side Win");
+            txSetColor(TX_WHITE);
+            txTextOut((1200-x_cor)/2,(800-y_cor)/2,"White side Win");
+        }
+        else{
+            int x_cor = txGetTextExtentX("Black side Win");
+            int y_cor = txGetTextExtentY("Black side Win");
+            txSetColor(TX_BLACK);
+            txTextOut((1200-x_cor)/2,(800-y_cor)/2,"Black side Win");
+        }
+    }
+    else{
+        int x_cor = txGetTextExtentX("н»„№я!");
+        int y_cor = txGetTextExtentY("н»„№я!");
+        txSetColor(TX_GRAY);
+        txTextOut((1200-x_cor)/2,(800-y_cor)/2,"Ќ»„№я!");
+    }
+}
+

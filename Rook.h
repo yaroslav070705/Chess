@@ -1,142 +1,123 @@
-///< @file Rook.h
+///< @author Anna, Andrey, Timofey
 
-/**
- @author Anna, Andrey, Timofey, Roman
-
- Rook - РєР»Р°СЃСЃ С„РёРіСѓСЂС‹ Р»Р°РґСЊРё;
-
- РџРѕС‚РѕРјРѕРє РєР»Р°СЃСЃР° BaseFigure.
-*/
-class Rook: public BaseFigure{   // РєР»Р°СЃСЃ Р›Р°РґСЊСЏ
+class Rook: public BaseFigure{   ///< класс ладьи
  public:
-    /// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
-    Rook(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}
-    virtual void draw(int x, int y, int r) override;                                            // СЂРёСЃРѕРІР°РЅРёРµ
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;                // РїСЂРѕСЃС‡С‘С‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґРѕРІ
+    Rook(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}           ///< конструктор
+    virtual void draw(int x, int y, int r) override;                                            ///< рисование
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;                ///< просчёт возможности ходов
     virtual void change() override{}
 };
-/**
- Р¤СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ ;
- \param x  - РєРѕРѕСЂРґРёРЅР°С‚Р° Р»Р°РґСЊРё РїРѕ РѕСЃРё x;
- \param y  - РєРѕРѕСЂРґРёРЅР°С‚Р° Р»Р°РґСЊРё РїРѕ РѕСЃРё y;
- \param r  - СЂР°Р·РјРµСЂ Р»Р°РґСЊРё.
- */
-void Rook::draw (int x, int y, int r){
+
+void Rook :: count_move_ability_cells(vector<BaseFigure*> figures) {
+    move_ability_cells.clear();
+    bool out = false;
+    for(int i = y_cell-1; i >= 0; i--) {         ///< вверх
+        int* cell = new int[2];
+        cell[0] = i;
+        cell[1] = x_cell;
+
+        move_ability_cells.push_back(cell);
+
+        for(auto figura : figures) {
+            if((i == figura->get_y_cell()) && (x_cell == figura->get_x_cell())) {
+                if(type == figura->get_type()){
+                    move_ability_cells.pop_back();
+                }
+                out = true;
+                break;
+            }
+        }
+        if(out){
+            break;
+        }
+    }
+
+    out = false;
+    for(int i = y_cell+1; i <= 7; i++) {          ///< вниз
+        int* cell = new int[2];
+        cell[0] = i;
+        cell[1] = x_cell;
+        move_ability_cells.push_back(cell);
+
+        for(auto figura : figures) {
+            if((i == figura->get_y_cell()) && (x_cell == figura->get_x_cell())) {
+                if(type == figura->get_type()){
+                    move_ability_cells.pop_back();
+                }
+                out = true;
+                break;
+            }
+        }
+        if(out){
+            break;
+        }
+    }
+
+    out = false;
+    for(int j = x_cell-1; j >= 0; j--) {          ///< влево
+        int* cell = new int[2];
+        cell[0] = y_cell;
+        cell[1] = j;
+
+        move_ability_cells.push_back(cell);
+
+        for(auto figura : figures) {
+            if((y_cell == figura->get_y_cell()) && (j == figura->get_x_cell())) {
+                if(type == figura->get_type()){
+                    move_ability_cells.pop_back();
+                }
+                out = true;
+                break;
+            }
+        }
+        if(out){
+            break;
+        }
+    }
+
+    out = false;
+    for(int j = x_cell+1; j <= 7; j++) {          ///< вправо
+        int* cell = new int[2];
+        cell[0] = y_cell;
+        cell[1] = j;
+
+        move_ability_cells.push_back(cell);
+
+        for(auto figura : figures) {
+            if((y_cell == figura->get_y_cell()) && (j == figura->get_x_cell())) {
+                if(type == figura->get_type()){
+                    move_ability_cells.pop_back();
+                }
+                out = true;
+                break;
+            }
+        }
+        if(out){
+            break;
+        }
+    }
+}
+
+void Rook::draw (int x, int y, int r)
+{
     txSetColor(side_color,2);
     txSetFillColor(main_color);
 
-    POINT head[12] = {{r+x, (9*r)+y}, {r+x, (4*r)+y}, {(3*r)+x, (4*r)+y}, {(3*r)+x, (7*r)+y }, {(4*r)+x, (7*r)+y}, {(4*r)+x,(5*r)+y}, {(7*r)+x,(5*r)+y}, {(7*r)+x,(7*r)+y}, {(8*r)+x,(7*r)+y}, {(8*r)+x,(4*r)+y},{(10*r)+x,(4*r)+y}, {(10*r)+x,(9*r)+y}}; //"РіРѕР»РѕРІР°", РјРµРЅСЏРµС‚СЃСЏ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С„РёРіСѓСЂС‹
+    POINT head[12] = {{r+x, (9*r)+y}, {r+x, (4*r)+y}, {(3*r)+x, (4*r)+y}, {(3*r)+x, (7*r)+y }, {(4*r)+x, (7*r)+y}, {(4*r)+x,(5*r)+y}, {(7*r)+x,(5*r)+y}, {(7*r)+x,(7*r)+y}, {(8*r)+x,(7*r)+y}, {(8*r)+x,(4*r)+y},{(10*r)+x,(4*r)+y}, {(10*r)+x,(9*r)+y}}; //"голова", меняется в зависимости от фигуры
     txPolygon (head, 12);
 
      POINT neck[4] = {{(2*r)+x, (9*r)+y}, {(9*r)+x,(9*r)+y},{(9*r)+x, (10*r)+y},{(2*r)+x,(10*r)+y}};
     txPolygon (neck, 4);
 
-    POINT body[4] = {{(4*r)+x, (10*r)+y}, {(7*r)+x, (10*r)+y}, {(8*r)+x, (20*r)+y}, {(3*r)+x, (20*r)+y}};     // РЅРµРёР·РјРµРЅСЏРµРјРѕРµ С‚РµР»Рѕ
+    POINT body[4] = {{(4*r)+x, (10*r)+y}, {(7*r)+x, (10*r)+y}, {(8*r)+x, (20*r)+y}, {(3*r)+x, (20*r)+y}};     ///< !неизменяемое тело
     txPolygon (body, 4);
 
-    POINT stand1[4] = {{(2*r)+x, (20*r)+y}, {(9*r)+x, (20*r)+y}, {(9*r)+x, (21*r)+y}, {(2*r)+x, (21*r)+y}};   // РїРµСЂРІР°СЏ РїРѕРґСЃС‚Р°РІРєР° РґР»СЏ РІСЃРµС…, Р° Сѓ РїРµС€РµРє С‚РѕР»СЊРєРѕ РѕРЅР°
+    POINT stand1[4] = {{(2*r)+x, (20*r)+y}, {(9*r)+x, (20*r)+y}, {(9*r)+x, (21*r)+y}, {(2*r)+x, (21*r)+y}};   ///< первая подставка для всех, а у пешек только она
     txPolygon (stand1, 4);
 
-    POINT stand2[4] = {{(1*r)+x, (21*r)+y}, {(10*r)+x, (21*r)+y}, {(10*r)+x, (22*r)+y}, {(1*r)+x, (22*r)+y}}; // РІС‚РѕСЂР°СЏ РїРѕРґСЃС‚Р°РІРєР° РґР»СЏ СЃСЂРµРґРЅРёС…(Р»Р°РґСЊСЏ,СЃР»РѕРЅ,РєРѕРЅСЊ) Рё Р»СѓС‡С€РёС…
+    POINT stand2[4] = {{(1*r)+x, (21*r)+y}, {(10*r)+x, (21*r)+y}, {(10*r)+x, (22*r)+y}, {(1*r)+x, (22*r)+y}}; ///< вторая подставка для средних(ладья,слон,конь) и лучших
     txPolygon (stand2, 4);
 
-    //POINT stand3[4] = {{(0*r)+x, (22*r)+y}, {(11*r)+x, (22*r)+y}, {(11*r)+x, (23*r)+y}, {(0*r)+x, (23*r)+y}};//С‚СЂРµС‚СЊСЏ РїРѕРґСЃС‚Р°РІРєР° РґР»СЏ Р»СѓС‡С€РёС…(С„РµСЂР·РµР№, РєРѕСЂРѕР»РµР№)
+    //POINT stand3[4] = {{(0*r)+x, (22*r)+y}, {(11*r)+x, (22*r)+y}, {(11*r)+x, (23*r)+y}, {(0*r)+x, (23*r)+y}};//третья подставка для лучших(ферзей, королей)
     // txPolygon (stand3, 4);
-}
-/**
- Р¤СѓРЅРєС†РёСЏ РїСЂРѕСЃС‡С‘С‚Р° РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґР°;
-
- \param figures  - РІРµРєС‚РѕСЂ С„РёРіСѓСЂ.
-
- Р›Р°РґСЊСЏ С…РѕРґРёС‚ Рё РµСЃС‚ РїРѕ РІРµСЂС‚РёРєР°Р»Рё Рё РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё РЅР° Р»СЋР±РѕРµ РєРѕР»Р»РёС‡РµСЃС‚РІРѕ РєР»РµС‚РѕРє;
-
-*/
-void Rook :: count_move_ability_cells(vector<BaseFigure*> figures) {
-    move_ability_cells.clear();
-    bool out = false;
-    for(int i = y_cell-1; i >= 0; i--) {         // РІРІРµСЂС…
-        int* cell = new int[2];
-        cell[0] = i;
-        cell[1] = x_cell;
-
-        move_ability_cells.push_back(cell);
-
-        for(auto figura : figures) {
-            if((i == figura->get_y_cell()) && (x_cell == figura->get_x_cell())) {
-                if(type == figura->get_type()){
-                    move_ability_cells.pop_back();
-                }
-                out = true;
-                break;
-            }
-        }
-        if(out){
-            break;
-        }
-    }
-
-    out = false;
-    for(int i = y_cell+1; i <= 7; i++) {          // РІРЅРёР·
-        int* cell = new int[2];
-        cell[0] = i;
-        cell[1] = x_cell;
-        move_ability_cells.push_back(cell);
-
-        for(auto figura : figures) {
-            if((i == figura->get_y_cell()) && (x_cell == figura->get_x_cell())) {
-                if(type == figura->get_type()){
-                    move_ability_cells.pop_back();
-                }
-                out = true;
-                break;
-            }
-        }
-        if(out){
-            break;
-        }
-    }
-
-    out = false;
-    for(int j = x_cell-1; j >= 0; j--) {          // РІР»РµРІРѕ
-        int* cell = new int[2];
-        cell[0] = y_cell;
-        cell[1] = j;
-
-        move_ability_cells.push_back(cell);
-
-        for(auto figura : figures) {
-            if((y_cell == figura->get_y_cell()) && (j == figura->get_x_cell())) {
-                if(type == figura->get_type()){
-                    move_ability_cells.pop_back();
-                }
-                out = true;
-                break;
-            }
-        }
-        if(out){
-            break;
-        }
-    }
-
-    out = false;
-    for(int j = x_cell+1; j <= 7; j++) {          // РІРїСЂР°РІРѕ
-        int* cell = new int[2];
-        cell[0] = y_cell;
-        cell[1] = j;
-
-        move_ability_cells.push_back(cell);
-
-        for(auto figura : figures) {
-            if((y_cell == figura->get_y_cell()) && (j == figura->get_x_cell())) {
-                if(type == figura->get_type()){
-                    move_ability_cells.pop_back();
-                }
-                out = true;
-                break;
-            }
-        }
-        if(out){
-            break;
-        }
-    }
 }

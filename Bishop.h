@@ -1,59 +1,38 @@
-///< @file Bishop.h
+///< @author Roma
 
-/**
- @author Roma
-
- Bishop - –∫–ª–∞—Å—Å —Ñ–∏–≥—É—Ä—ã —Å–ª–æ–Ω–∞;
-
- –ü–æ—Ç–æ–º–æ–∫ –∫–ª–∞—Å—Å–∞ BaseFigure.
-*/
-class Bishop: public BaseFigure{
+class Bishop: public BaseFigure{   ///< ÍÎ‡ÒÒ ÒÎÓÌ‡
  public:
-    /// –∫–æ–Ω—Å—Ç—Ä—É–∫—Ç–æ—Ä
-    Bishop(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}
-
-    virtual void draw(int x, int y, int r) override;                                          // —Ä–∏—Å–æ–≤–∞–Ω–∏–µ
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;              // –ø—Ä–æ—Å—á—ë—Ç –≤–æ–∑–º–æ–∂–Ω–æ—Å—Ç–∏ —Ö–æ–¥–æ–≤
+    Bishop(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}   ///< ÍÓÌÒÚÛÍÚÓ
+    virtual void draw(int x, int y, int r) override;                                                                                                            ///< ËÒÓ‚‡ÌËÂ
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;                                                                                ///< ÔÓÒ˜∏Ú ‚ÓÁÏÓÊÌÓÒÚË ıÓ‰Ó‚
     virtual void change() override{}
 };
-/**
- –§—É–Ω–∫—Ü–∏—è —Ä–∏—Å–æ–≤–∞–Ω–∏—è —Å–ª–æ–Ω–∞;
- \param x  - –∫–æ–æ—Ä–¥–∏–Ω–∞—Ç–∞ —Å–ª–æ–Ω–∞ –ø–æ –æ—Å–∏ x;
- \param y  - –∫–æ–æ—Ä–¥–∏–Ω–∞—Ç–∞ —Å–ª–æ–Ω–∞ –ø–æ –æ—Å–∏ y;
- \param r  - —Ä–∞–∑–º–µ—Ä —Å–ª–æ–Ω–∞.
- */
+
 void Bishop::draw(int x, int y, int r){
     txSetColor (side_color, 0.5);
     txSetFillColor (main_color);
-    txEllipse (x + 1 * r, y - 7.4 * r, x + 3.9 * r,  y - 6.4 * r);    // 3 –æ–≤–∞–ª —Å–≤–µ—Ä—Ö—É
-    txEllipse (x + 1 * r, y - 10.15 * r, x + 3.9 * r,  y - 7.15 * r); // 2 –æ–≤–∞–ª —Å–≤–µ—Ä—Ö—É
-    txEllipse (x + 2 * r, y - 10.65 * r, x + 2.9 * r,  y - 10.1 * r); // 1 –æ–≤–∞–ª —Å–≤–µ—Ä—Ö—É
+    txEllipse (x + 1 * r, y - 7.4 * r, x + 3.9 * r,  y - 6.4 * r);    ///< 3 Ó‚‡Î Ò‚ÂıÛ
+    txEllipse (x + 1 * r, y - 10.15 * r, x + 3.9 * r,  y - 7.15 * r); ///< 2 Ó‚‡Î Ò‚ÂıÛ
+    txEllipse (x + 2 * r, y - 10.65 * r, x + 2.9 * r,  y - 10.1 * r); ///< 1 Ó‚‡Î Ò‚ÂıÛ
 
-    POINT body[4] = {{long(19/10.*r)+x, (-7*r)+y}, {long(29/10.*r)+x, (-7*r)+y}, {long(49/10.*r)+x, (3*r)+y}, {long(-1/10.*r)+x, (3*r)+y}}; // –Ω–µ–∏–∑–º–µ–Ω—è–µ–º–æ–µ —Ç–µ–ª–æ
+    POINT body[4] = {{long(19/10.*r)+x, (-7*r)+y}, {long(29/10.*r)+x, (-7*r)+y}, {long(49/10.*r)+x, (3*r)+y}, {long(-1/10.*r)+x, (3*r)+y}}; ///< ÌÂËÁÏÂÌˇÂÏÓÂ ÚÂÎÓ
     txPolygon (body, 4);
 
-    POINT stand1[4] = {{long(-11/10.*r)+x, (3*r)+y}, {long(59/10.*r)+x, (3*r)+y}, {long(59/10.*r)+x, (4*r)+y}, {long(-11/10.*r)+x, (4*r)+y}}; // –ø–µ—Ä–≤–∞—è –ø–æ–¥—Å—Ç–∞–≤–∫–∞ –¥–ª—è –≤—Å–µ—Ö, –∞ —É –ø–µ—à–µ–∫ —Ç–æ–ª—å–∫–æ –æ–Ω–∞
+    POINT stand1[4] = {{long(-11/10.*r)+x, (3*r)+y}, {long(59/10.*r)+x, (3*r)+y}, {long(59/10.*r)+x, (4*r)+y}, {long(-11/10.*r)+x, (4*r)+y}}; ///< ÔÂ‚‡ˇ ÔÓ‰ÒÚ‡‚Í‡ ‰Îˇ ‚ÒÂı, ‡ Û ÔÂ¯ÂÍ ÚÓÎ¸ÍÓ ÓÌ‡
     txPolygon (stand1, 4);
 
-    POINT stand2[4] = {{long(-21/10.*r)+x, (4*r)+y}, {long(69/10.*r)+x, (4*r)+y}, {long(69/10.*r)+x, (5*r)+y}, {long(-21/10.*r)+x, (5*r)+y}}; // –≤—Ç–æ—Ä–∞—è –ø–æ–¥—Å—Ç–∞–≤–∫–∞ –¥–ª—è —Å—Ä–µ–¥–Ω–∏—Ö(–ª–∞–¥—å—è,—Å–ª–æ–Ω,–∫–æ–Ω—å) –∏ –ª—É—á—à–∏—Ö
+    POINT stand2[4] = {{long(-21/10.*r)+x, (4*r)+y}, {long(69/10.*r)+x, (4*r)+y}, {long(69/10.*r)+x, (5*r)+y}, {long(-21/10.*r)+x, (5*r)+y}}; ///< ‚ÚÓ‡ˇ ÔÓ‰ÒÚ‡‚Í‡ ‰Îˇ ÒÂ‰ÌËı(Î‡‰¸ˇ,ÒÎÓÌ,ÍÓÌ¸) Ë ÎÛ˜¯Ëı
     txPolygon (stand2, 4);
     txSetColor (TX_BLACK, 0.085 * r);
     txLine (x + 3.1 * r, y - 10 * r, x + 2.4 * r, y - 8.8 * r);
     txLine (x + 2.4 * r, y - 8.8 * r, x + 2.7 * r, y - 8.65 * r);
     txLine (x + 2.7 * r, y - 8.65 * r, x + 3.359 * r, y - 9.8 * r);
 }
-/**
- –§—É–Ω–∫—Ü–∏—è –ø—Ä–æ—Å—á—ë—Ç–∞ –≤–æ–∑–º–æ–∂–Ω–æ—Å—Ç–∏ —Ö–æ–¥–∞;
 
- \param figures  - –≤–µ–∫—Ç–æ—Ä —Ñ–∏–≥—É—Ä.
-
- –°–ª–æ–Ω —Ö–æ–¥–∏—Ç –∏ –µ—Å—Ç –ø–æ –¥–∏–∞–≥–æ–Ω–∞–ª—è–º –Ω–∞ –ª—é–±–æ–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ –∫–ª–µ—Ç–æ–∫;
-
-*/
 void Bishop :: count_move_ability_cells(vector<BaseFigure*> figures) {
     move_ability_cells.clear();
     bool out = false;
-    for(int i = 1; (y_cell - i >= 0) && (x_cell + i < 8); i++) {   // –≤–≤–µ—Ä—Ö –≤–ø—Ä–∞–≤–æ
+    for(int i = 1; (y_cell - i >= 0) && (x_cell + i < 8); i++) {   ///< ‚‚Âı ‚Ô‡‚Ó
         int* cell = new int[2];
         cell[0] = y_cell - i;
         cell[1] = x_cell + i;
@@ -75,7 +54,7 @@ void Bishop :: count_move_ability_cells(vector<BaseFigure*> figures) {
     }
 
     out = false;
-    for(int i = 1; (y_cell - i >= 0) && (x_cell - i >= 0); i++) {  // –≤–≤–µ—Ä—Ö –≤–ª–µ–≤–æ
+    for(int i = 1; (y_cell - i >= 0) && (x_cell - i >= 0); i++) {  ///< ‚‚Âı ‚ÎÂ‚Ó
         int* cell = new int[2];
         cell[0] = y_cell - i;
         cell[1] = x_cell - i;
@@ -96,7 +75,7 @@ void Bishop :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     out = false;
-    for(int i = 1; (y_cell + i < 8) && (x_cell + i < 8); i++) {    // –≤–Ω–∏–∑ –≤–ø—Ä–∞–≤–æ
+    for(int i = 1; (y_cell + i < 8) && (x_cell + i < 8); i++) {    ///< ‚ÌËÁ ‚Ô‡‚Ó
         int* cell = new int[2];
         cell[0] = y_cell + i;
         cell[1] = x_cell + i;
@@ -117,7 +96,7 @@ void Bishop :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     out = false;
-    for(int i = 1; (y_cell + i < 8) && (x_cell - i >= 0); i++) {   // –≤–Ω–∏–∑ –≤–ª–µ–≤–æ
+    for(int i = 1; (y_cell + i < 8) && (x_cell - i >= 0); i++) {   ///< ‚ÌËÁ ‚ÎÂ‚Ó
         int* cell = new int[2];
         cell[0] = y_cell + i;
         cell[1] = x_cell - i;
@@ -138,5 +117,3 @@ void Bishop :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
 }
-
-

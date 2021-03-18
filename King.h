@@ -1,29 +1,16 @@
-///< @file King.h
+///< @author Roma, Timofey, Yaroslav
 
-/**
- @author Roma, Timofey, Yaroslav
-
- King - –∫–ª–∞—Å—Å —Ñ–∏–≥—É—Ä—ã –∫–æ—Ä–æ–ª—è;
-
- –ü–æ—Ç–æ–º–æ–∫ –∫–ª–∞—Å—Å–∞ BaseFigure.
-*/
-class King:public BaseFigure{
+class King:public BaseFigure{   ///< ÍÎ‡ÒÒ ÍÓÓÎˇ
 public:
-    /// –∫–æ–Ω—Å—Ç—Ä—É–∫—Ç–æ—Ä
-    King(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}
-    virtual void draw(int type0, int x_cell0, int y_cell0) override;                    // —Ä–∏—Å–æ–≤–∞–Ω–∏–µ
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;        // –ø—Ä–æ—Å—á—ë—Ç –≤–æ–∑–º–æ–∂–Ω–æ—Å—Ç–∏ —Ö–æ–¥–æ–≤
+    King(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){} ///< ÍÓÌÒÚÛÍÚÓ
+    virtual void draw(int type0, int x_cell0, int y_cell0) override;                    ///< ËÒÓ‚‡ÌËÂ
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;        ///< ÔÓÒ˜∏Ú ‚ÓÁÏÓÊÌÓÒÚË ıÓ‰Ó‚
     virtual void change() override{}
 };
-/**
- –§—É–Ω–∫—Ü–∏—è —Ä–∏—Å–æ–≤–∞–Ω–∏—è –∫–æ—Ä–æ–ª—è;
- \param x  - –∫–æ–æ—Ä–¥–∏–Ω–∞—Ç–∞ –∫–æ—Ä–æ–ª—è –ø–æ –æ—Å–∏ x;
- \param y  - –∫–æ–æ—Ä–¥–∏–Ω–∞—Ç–∞ –∫–æ—Ä–æ–ª—è –ø–æ –æ—Å–∏ y;
- \param r  - —Ä–∞–∑–º–µ—Ä –∫–æ—Ä–æ–ª—è.
- */
+
 void King::draw(int x, int y, int r){
     txSetColor(side_color,2);
-    txSetFillColor (RGB (255, 215, 0)); // –∑–æ–ª–æ—Ç–æ –¥–ª—è –∫–æ—Ä–æ–Ω—ã
+    txSetFillColor (RGB (255, 215, 0)); ///< ÁÓÎÓÚÓ ‰Îˇ ÍÓÓÌ˚
 
     POINT headtop[25] = {{(6*r)+x, (0*r)+y}, {(7*r)+x, (6*r)+y}, {(8*r)+x, (0*r)+y},
                      {(9*r)+x, (6*r)+y}, {(10*r)+x, (0*r)+y}, {(11*r)+x, (6*r)+y},
@@ -32,7 +19,7 @@ void King::draw(int x, int y, int r){
                      {(14*r)+x, (8*r)+y}, {(12*r)+x, (18*r)+y}, {(13*r)+x, (18*r)+y},
                      {(13*r)+x, (19*r)+y}, {(14*r)+x, (19*r)+y}, {(14*r)+x, (20*r)+y},
                      {(8*r)+x, (20*r)+y}, {(8*r)+x, (19*r)+y}, {(9*r)+x, (19*r)+y},
-                     {(9*r)+x, (18*r)+y}, {(10*r)+x, (18*r)+y}, {(8*r)+x, (8*r)+y}, {(6*r)+x, (8*r)+y}}; //"–≥–æ–ª–æ–≤–∞", –º–µ–Ω—è–µ—Ç—Å—è –≤ –∑–∞–≤–∏—Å–∏–º–æ—Å—Ç–∏ –æ—Ç —Ñ–∏–≥—É—Ä—ã
+                     {(9*r)+x, (18*r)+y}, {(10*r)+x, (18*r)+y}, {(8*r)+x, (8*r)+y}, {(6*r)+x, (8*r)+y}}; //"„ÓÎÓ‚‡", ÏÂÌˇÂÚÒˇ ‚ Á‡‚ËÒËÏÓÒÚË ÓÚ ÙË„Û˚
     txPolygon (headtop, 25);
 
     /*POINT headnottop[26] = {{(2*r)+x, (0*r)+y}, {(3*r)+x, (4*r)+y}, {(3*r)+x, (0*r)+y},
@@ -43,36 +30,29 @@ void King::draw(int x, int y, int r){
                            {(7*r)+x, (9*r)+y}, {(7*r)+x, (10*r)+y}, {(8*r)+x, (10*r)+y},
                            {(8*r)+x, (11*r)+y}, {(3*r)+x, (11*r)+y}, {(3*r)+x, (10*r)+y},
                            {(4*r)+x, (10*r)+y}, {(4*r)+x, (9*r)+y}, {(5*r)+x, (9*r)+y},
-                           {(4*r)+x, (5*r)+y}, {(2*r)+x, (5*r)+y}}; //"–≥–æ–ª–æ–≤–∞", –º–µ–Ω—è–µ—Ç—Å—è –≤ –∑–∞–≤–∏—Å–∏–º–æ—Å—Ç–∏ –æ—Ç —Ñ–∏–≥—É—Ä—ã
+                           {(4*r)+x, (5*r)+y}, {(2*r)+x, (5*r)+y}}; //"„ÓÎÓ‚‡", ÏÂÌˇÂÚÒˇ ‚ Á‡‚ËÒËÏÓÒÚË ÓÚ ÙË„Û˚
     txPolygon (headnottop, 26);*/
 
-    txSetFillColor (main_color); // –æ—Å–Ω–æ–≤–Ω–æ–π —Ü–≤–µ—Ç (–±–µ–ª—ã–π)
-    //txSetFillColor (RGB (255, 255, 255)); ///< –æ—Å–Ω–æ–≤–Ω–æ–π —Ü–≤–µ—Ç (—á—ë—Ä–Ω—ã–π)
+    txSetFillColor (main_color); ///< ÓÒÌÓ‚ÌÓÈ ˆ‚ÂÚ (·ÂÎ˚È)
+    //txSetFillColor (RGB (255, 255, 255)); ///< ÓÒÌÓ‚ÌÓÈ ˆ‚ÂÚ (˜∏Ì˚È)
 
-    POINT body[4] = {{(10*r)+x, (20*r)+y}, {(12*r)+x, (20*r)+y}, {(16*r)+x, (40*r)+y}, {(6*r)+x, (40*r)+y}}; // –Ω–µ–∏–∑–º–µ–Ω—è–µ–º–æ–µ —Ç–µ–ª–æ
+    POINT body[4] = {{(10*r)+x, (20*r)+y}, {(12*r)+x, (20*r)+y}, {(16*r)+x, (40*r)+y}, {(6*r)+x, (40*r)+y}}; ///< ÌÂËÁÏÂÌˇÂÏÓÂ ÚÂÎÓ
     txPolygon (body, 4);
 
-    POINT stand1[4] = {{(4*r)+x, (40*r)+y}, {(18*r)+x, (40*r)+y}, {(18*r)+x, (42*r)+y}, {(4*r)+x, (42*r)+y}}; // –ø–µ—Ä–≤–∞—è –ø–æ–¥—Å—Ç–∞–≤–∫–∞ –¥–ª—è –≤—Å–µ—Ö, –∞ —É –ø–µ—à–µ–∫ —Ç–æ–ª—å–∫–æ –æ–Ω–∞
+    POINT stand1[4] = {{(4*r)+x, (40*r)+y}, {(18*r)+x, (40*r)+y}, {(18*r)+x, (42*r)+y}, {(4*r)+x, (42*r)+y}}; ///< ÔÂ‚‡ˇ ÔÓ‰ÒÚ‡‚Í‡ ‰Îˇ ‚ÒÂı, ‡ Û ÔÂ¯ÂÍ ÚÓÎ¸ÍÓ ÓÌ‡
     txPolygon (stand1, 4);
 
-    POINT stand2[4] = {{(2*r)+x, (42*r)+y}, {(20*r)+x, (42*r)+y}, {(20*r)+x, (44*r)+y}, {(2*r)+x, (44*r)+y}}; // –≤—Ç–æ—Ä–∞—è –ø–æ–¥—Å—Ç–∞–≤–∫–∞ –¥–ª—è —Å—Ä–µ–¥–Ω–∏—Ö(–ª–∞–¥—å—è,—Å–ª–æ–Ω,–∫–æ–Ω—å) –∏ –ª—É—á—à–∏—Ö
+    POINT stand2[4] = {{(2*r)+x, (42*r)+y}, {(20*r)+x, (42*r)+y}, {(20*r)+x, (44*r)+y}, {(2*r)+x, (44*r)+y}}; ///< ‚ÚÓ‡ˇ ÔÓ‰ÒÚ‡‚Í‡ ‰Îˇ ÒÂ‰ÌËı(Î‡‰¸ˇ,ÒÎÓÌ,ÍÓÌ¸) Ë ÎÛ˜¯Ëı
     txPolygon (stand2, 4);
 
-    POINT stand3[4] = {{(0*r)+x, (44*r)+y}, {(22*r)+x, (44*r)+y}, {(22*r)+x, (46*r)+y}, {(0*r)+x, (46*r)+y}};// —Ç—Ä–µ—Ç—å—è –ø–æ–¥—Å—Ç–∞–≤–∫–∞ –¥–ª—è –ª—É—á—à–∏—Ö(—Ñ–µ—Ä–∑–µ–π, –∫–æ—Ä–æ–ª–µ–π)
+    POINT stand3[4] = {{(0*r)+x, (44*r)+y}, {(22*r)+x, (44*r)+y}, {(22*r)+x, (46*r)+y}, {(0*r)+x, (46*r)+y}};///< ÚÂÚ¸ˇ ÔÓ‰ÒÚ‡‚Í‡ ‰Îˇ ÎÛ˜¯Ëı(ÙÂÁÂÈ, ÍÓÓÎÂÈ)
     txPolygon (stand3, 4);
 }
-/**
- –§—É–Ω–∫—Ü–∏—è –ø—Ä–æ—Å—á—ë—Ç–∞ –≤–æ–∑–º–æ–∂–Ω–æ—Å—Ç–∏ —Ö–æ–¥–∞;
 
- \param figures  - –≤–µ–∫—Ç–æ—Ä —Ñ–∏–≥—É—Ä.
-
- –ö–æ—Ä–æ–ª—å —Ö–æ–¥–∏—Ç –∏ –µ—Å—Ç –≤–æ –≤—Å–µ —Å—Ç–æ—Ä–æ–Ω—ã –Ω–∞ –æ–¥–Ω—É –∫–ª–µ—Ç–∫—É;
-
-*/
 void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
     move_ability_cells.clear();
     if((x_cell+1) < 8 && (y_cell-1) >= 0)
-    {                                           // –≤–≤–µ—Ä—Ö –ø—Ä–∞–≤–æ
+    {                                           ///< ‚‚Âı Ô‡‚Ó
         int* cell = new int[2];
         cell[0] = y_cell - 1;
         cell[1] = x_cell + 1;
@@ -88,7 +68,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((x_cell -1) >= 0 && (y_cell-1) >= 0)
-    {                                           // –≤–≤–µ—Ä—Ö –≤–ª–µ–≤–æ
+    {                                           ///< ‚‚Âı ‚ÎÂ‚Ó
         int* cell = new int[2];
         cell[0] = y_cell - 1;
         cell[1] = x_cell - 1;
@@ -104,7 +84,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((x_cell+1) < 8 && (y_cell+1) < 8)
-    {                                           // –≤–Ω–∏–∑ –≤–ø—Ä–∞–≤–æ
+    {                                           ///< ‚ÌËÁ ‚Ô‡‚Ó
         int* cell = new int[2];
         cell[0] = y_cell + 1;
         cell[1] = x_cell + 1;
@@ -120,7 +100,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((x_cell-1) >= 0 && (y_cell+1) < 8)
-    {                                           // –≤–Ω–∏–∑ –≤–ª–µ–≤–æ
+    {                                           ///< ‚ÌËÁ ‚ÎÂ‚Ó
         int* cell = new int[2];
         cell[0] = y_cell + 1;
         cell[1] = x_cell - 1;
@@ -136,7 +116,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((y_cell-1) >= 0)
-    {                                           // –≤–≤–µ—Ä—Ö
+    {                                           ///< ‚‚Âı
         int* cell = new int[2];
         cell[0] = y_cell - 1;
         cell[1] = x_cell;
@@ -152,7 +132,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((y_cell+1) < 8)
-    {                                           // –≤–Ω–∏–∑
+    {                                           ///< ‚ÌËÁ
         int* cell = new int[2];
         cell[0] = y_cell + 1;
         cell[1] = x_cell;
@@ -168,7 +148,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((x_cell+1) < 8)
-    {                                           // –≤–ø—Ä–∞–≤–æ
+    {                                           ///< ‚Ô‡‚Ó
         int* cell = new int[2];
         cell[0] = y_cell;
         cell[1] = x_cell + 1;
@@ -184,7 +164,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((x_cell-1) >= 0)
-    {                                           // –≤–ª–µ–≤–æ
+    {                                           ///< ‚ÎÂ‚Ó
         int* cell = new int[2];
         cell[0] = y_cell;
         cell[1] = x_cell - 1;
