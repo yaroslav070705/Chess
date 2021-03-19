@@ -1,7 +1,5 @@
 #include "TXLib.h"
 // @author Arseniy
-// @support Arsenyev
-//shiza
 int main()
 {
     txCreateWindow(1200,800);
