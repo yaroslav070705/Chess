@@ -1,4 +1,6 @@
 #include "TXLib.h"
+#include <fstream>
+#include <string>
 #include "widgets.h"
 #include "base_figure.h"
 #include "cell.h"
@@ -16,6 +18,7 @@ using namespace std;
 int main(){
     txCreateWindow(1200,800);
     txBegin();
+    read_file();
     add_widgets();
     load_images();
     menu();
@@ -24,7 +27,5 @@ int main(){
     }
     //start_game();
     txEnd();
-    txDeleteDC(bg_pic);
-    txDeleteDC(field_pic);
-    txDeleteDC(settings_pic);
+    delete_images();
 }

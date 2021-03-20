@@ -100,6 +100,9 @@ public:
         this->y = y;
     }
 
+    void set_bg_color(COLORREF bg){
+        this->bg = bg;
+    }
 };
 
 

@@ -1,25 +1,59 @@
 bool off_sound = false;
 bool end_game;
-HDC bg_pic;
-HDC settings_pic;
+int style = 1;
+HDC bg_pic_cyberpunk;
+HDC settings_pic_cyberpunk;
+HDC bg_pic_classic;
+HDC settings_pic_classic;
 HDC field_pic;
+void write_file(string button_name);
+void read_file();
+
 void add_widgets();
 void load_images();
+void delete_images();
 void menu();
 void settings();
 void on_sound_func();
 void off_sound_func();
+void classic_style_button_func();
+void cyberpunk_style_button_func();
 void start_game();
 Button play_button(395, 243, start_game, "Играть", "Road Rage(RUS BY LYAJKA)", 70, 90, 355, RGB(247, 240, 1) , TX_BLACK, false);
 
 Button settings_button(395, 348, settings, "Настройки", "Road Rage(RUS BY LYAJKA)", 70, 90, 355, RGB(247, 240, 1) , TX_BLACK, false); //76, 230, 119
 Button on_sound_button(460, 395, on_sound_func, "Вкл", "Road Rage(RUS BY LYAJKA)", 70, 64, 108, RGB(76, 230, 119) , TX_BLACK, false);
 Button off_sound_button(570, 395, off_sound_func, "Выкл", "Road Rage(RUS BY LYAJKA)", 70, 64, 115, RGB(230, 76, 76) , TX_BLACK, false);
-Button classic_style_button(415, 570, settings, "Classic Style", "Road Rage(RUS BY LYAJKA)", 40, 85, 155, RGB(247, 240, 1) , TX_BLACK, false);
-Button cyberpunk_style_button(575, 570, settings, "Cyberpunk Style", "Road Rage(RUS BY LYAJKA)", 30, 85, 158, RGB(247, 240, 1) , TX_BLACK, false);
+Button classic_style_button(415, 570, classic_style_button_func, "Classic Style", "Road Rage(RUS BY LYAJKA)", 40, 85, 155, RGB(247, 240, 1) , TX_BLACK, false);
+Button cyberpunk_style_button(575, 570, cyberpunk_style_button_func, "Cyberpunk Style", "Road Rage(RUS BY LYAJKA)", 30, 85, 158, RGB(247, 240, 1) , TX_BLACK, false);
 
 Button back_button(415, 660, menu, "Назад", "Road Rage(RUS BY LYAJKA)", 70, 90, 318, RGB(247, 240, 1) , TX_BLACK, false);
 
+void write_file(string button_name){
+    //if(ifstream file("style_file.txt")){
+    ofstream file("style_file.txt", ios_base::out);
+    if(button_name == "classic_style_button"){
+        file<< "classic";
+        style = 2;
+        for(auto button:buttons){
+            button->set_bg_color(TX_BLUE);
+        }
+    }
+    else if(button_name == "cyberpunk_style_button"){
+        file<< "cyberpunk";
+        style = 1;
+        for(auto button:buttons){
+            button->set_bg_color(RGB(247, 240, 1));
+        }
+    }
+    file.close();
+}
+
+void read_file(){
+    ifstream file;
+    file>>style;
+    file.close();
+}
 
 void add_widgets(){
     buttons.push_back(&play_button);
@@ -32,9 +66,16 @@ void add_widgets(){
 }
 
 void load_images(){
-    bg_pic = txLoadImage("Chess_menu.bmp");
-    settings_pic = txLoadImage("Chess_settings_menu1.bmp");
+    bg_pic_cyberpunk = txLoadImage("Chess_menu1.bmp");
+    settings_pic_cyberpunk = txLoadImage("Chess_settings_menu1.bmp");
     field_pic = txLoadImage("Chess_pic.bmp");
+    bg_pic_classic = txLoadImage("Chess_menu2.bmp");
+    settings_pic_classic = txLoadImage("Chess_settings_menu2.bmp");
+}
+void delete_images(){
+    txDeleteDC(bg_pic_cyberpunk);
+    txDeleteDC(field_pic);
+    txDeleteDC(settings_pic_cyberpunk);
 }
 
 void menu(){
@@ -48,7 +89,12 @@ void menu(){
     back_button.set_state(false);
     play_button.set_state(true);
     settings_button.set_state(true);
-    txBitBlt(txDC(),0,0,1200,800,bg_pic,0,0);
+    if(style == 1){
+        txBitBlt(txDC(),0,0,1200,800,bg_pic_cyberpunk,0,0);
+    }
+    else{
+        txBitBlt(txDC(),0,0,1200,800,bg_pic_classic,0,0);
+    }
 }
 
 void settings(){
@@ -59,7 +105,12 @@ void settings(){
     classic_style_button.set_state(true);
     cyberpunk_style_button.set_state(true);
     back_button.set_state(true);
-    txBitBlt(txDC(),0,0,1200,800,settings_pic,0,0);
+    if(style == 1){
+        txBitBlt(txDC(),0,0,1200,800,settings_pic_cyberpunk,0,0);
+    }
+    else{
+        txBitBlt(txDC(),0,0,1200,800,settings_pic_classic,0,0);
+    }
 }
 
 void on_sound_func(){
@@ -70,6 +121,13 @@ void on_sound_func(){
 void off_sound_func(){
     off_sound = true;
     txPlaySound(NULL);
+}
+
+void classic_style_button_func(){
+    write_file("classic_style_button");
+}
+void cyberpunk_style_button_func(){
+    write_file("cyberpunk_style_button");
 }
 
 void start_game(){
@@ -94,6 +152,7 @@ void start_game(){
         txSleep(10);
     }
     field.end(end_game);
+    menu();
     //txDeleteDC(bg_pic);
     //txDeleteDC(field_pic);
 }
