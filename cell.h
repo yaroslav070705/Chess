@@ -1,29 +1,29 @@
 ///< @file cell.h
 
 /**
- @author Yaroslav, Roma, Anna
+ @author Yaroslav, Roma, Anna, Stephan
 
- Cell - êëàññ êëåòêè ïîëÿ;
+ Cell - ÐºÐ»Ð°ÑÑ ÐºÐ»ÐµÑ‚ÐºÐ¸ Ð¿Ð¾Ð»Ñ;
 */
 
 class Cell{
 private:
-    /// äëèíà ñòîðîíû êëåòêè
+    /// Ð´Ð»Ð¸Ð½Ð° ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñ‹ ÐºÐ»ÐµÑ‚ÐºÐ¸
     int side;
-    /// òèï êëåòêè, 1 - ÷¸ðíàÿ êëåòêà, 0 - áåëàÿ êëåòêà
+    /// Ñ‚Ð¸Ð¿ ÐºÐ»ÐµÑ‚ÐºÐ¸, 1 - Ñ‡Ñ‘Ñ€Ð½Ð°Ñ ÐºÐ»ÐµÑ‚ÐºÐ°, 0 - Ð±ÐµÐ»Ð°Ñ ÐºÐ»ÐµÑ‚ÐºÐ°
     int type;
-    /// ïðîâåðêà ôîêóñà
+    /// Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ñ„Ð¾ÐºÑƒÑÐ°
     bool focus;
-    /// òîëùèíà ñòîðîíû êëåòêè
+    /// Ñ‚Ð¾Ð»Ñ‰Ð¸Ð½Ð° ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñ‹ ÐºÐ»ÐµÑ‚ÐºÐ¸
     int side_bold = 5;
-    /// îòñòóï ïî x
+    /// Ð¾Ñ‚ÑÑ‚ÑƒÐ¿ Ð¿Ð¾ x
     int margin_x = 260;
-    /// îòñòóï ïî y
+    /// Ð¾Ñ‚ÑÑ‚ÑƒÐ¿ Ð¿Ð¾ y
     int margin_y = 60;
-    /// óêàçàòåëü íà ôèãóðó
+    /// ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»ÑŒ Ð½Ð° Ñ„Ð¸Ð³ÑƒÑ€Ñƒ
     BaseFigure* figure = nullptr;
 public:
-    /// êîíñòðóêòîð
+    /// ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€
     Cell(int type0, int side0);
 
     void draw(int i_cell, int j_cell);
@@ -39,49 +39,42 @@ Cell::Cell(int type0, int side0){
     focus = false;
 }
 /**
- Ôóíêöèÿ ðèñîâàíèÿ êëåòêè;
- \param i_cell  - íîìåð êëåòêè ïî ñòðîêå
- \param j_cell  - íîìåð êëåòêè ïî ñòîëáöó
+ Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ Ñ€Ð¸ÑÐ¾Ð²Ð°Ð½Ð¸Ñ ÐºÐ»ÐµÑ‚ÐºÐ¸;
+ \param i_cell  - Ð½Ð¾Ð¼ÐµÑ€ ÐºÐ»ÐµÑ‚ÐºÐ¸ Ð¿Ð¾ ÑÑ‚Ñ€Ð¾ÐºÐµ
+ \param j_cell  - Ð½Ð¾Ð¼ÐµÑ€ ÐºÐ»ÐµÑ‚ÐºÐ¸ Ð¿Ð¾ ÑÑ‚Ð¾Ð»Ð±Ñ†Ñƒ
 */
 void Cell::draw(int i_cell, int j_cell){
-    if(type == 0){
-        txSetColor(TX_WHITE,10);
-        txSetFillColor(TX_WHITE);
-    }
-
-    else{
-        txSetColor(TX_BLACK,10);
-        txSetFillColor(TX_BLACK);
-    }
-
     if(focus){
-        txSetColor(TX_GREEN,12);
+        txSetColor(TX_GREEN, 12);
+        txSetFillColor(TX_NULL);
+        txRectangle (margin_x+j_cell*(side)+side_bold, margin_y+i_cell*(side)+side_bold, margin_x+(j_cell+1)*(side)-side_bold, margin_y+(i_cell+1)*(side)-side_bold);
     }
-    txRectangle(margin_x+j_cell*(side)+side_bold, margin_y+i_cell*(side)+side_bold, margin_x+(j_cell+1)*(side)-side_bold, margin_y+(i_cell+1)*(side)-side_bold);
 }
 /**
- Ôóíêöèÿ ïðèñâàèâàíèÿ ôîêóñà;
- \param focus0  - ïðîâåðêà ôîêóñà
+ Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ Ð¿Ñ€Ð¸ÑÐ²Ð°Ð¸Ð²Ð°Ð½Ð¸Ñ Ñ„Ð¾ÐºÑƒÑÐ°;
+ \param focus0  - Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ñ„Ð¾ÐºÑƒÑÐ°
 */
 void Cell::set_focus(bool focus0){
     focus = focus0;
 }
 /**
- Ôóíêöèÿ, êîòîðàÿ âîçâðàùàåò òèï êëåòêè;
+ Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ, ÐºÐ¾Ñ‚Ð¾Ñ€Ð°Ñ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ñ‚Ð¸Ð¿ ÐºÐ»ÐµÑ‚ÐºÐ¸;
 */
 int Cell::get_type(){
     return type;
 }
 /**
- Ôóíêöèÿ, êîòîðàÿ ïðèñâàåâàåò ôèãóðó êëåòêè;
- \param figure0  - óêàçàòåëü íà ôèãóðó
+ Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ, ÐºÐ¾Ñ‚Ð¾Ñ€Ð°Ñ Ð¿Ñ€Ð¸ÑÐ²Ð°ÐµÐ²Ð°ÐµÑ‚ Ñ„Ð¸Ð³ÑƒÑ€Ñƒ ÐºÐ»ÐµÑ‚ÐºÐ¸;
+ \param figure0  - ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»ÑŒ Ð½Ð° Ñ„Ð¸Ð³ÑƒÑ€Ñƒ
 */
 void Cell::set_figure(BaseFigure* figure0){
     figure = figure0;
 }
 /**
-  Âîçâðàùàåò óêàçàòåëü íà ôèãóðó;
+  Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»ÑŒ Ð½Ð° Ñ„Ð¸Ð³ÑƒÑ€Ñƒ;
 */
 BaseFigure* Cell::get_figure(){
     return figure;
 }
+
+
