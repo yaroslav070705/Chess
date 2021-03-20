@@ -1,6 +1,5 @@
 #include "TXLib.h"
 #include <fstream>
-#include <string>
 #include "widgets.h"
 #include "base_figure.h"
 #include "cell.h"
@@ -21,6 +20,7 @@ int main(){
     read_file();
     add_widgets();
     load_images();
+    update_style();
     menu();
     while(!GetAsyncKeyState(VK_ESCAPE)){
         update_widgets();

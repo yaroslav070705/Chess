@@ -3,22 +3,22 @@
 /**
  @author Roma, Timofey, Yaroslav
 
- King - РєР»Р°СЃСЃ С„РёРіСѓСЂС‹ РєРѕСЂРѕР»СЏ;
+ King - класс фигуры короля;
 
- РџРѕС‚РѕРјРѕРє РєР»Р°СЃСЃР° BaseFigure.
+ Потомок класса BaseFigure.
 */
 class King:public BaseFigure{
-    /// РїРµСЂРµРјРµРЅРЅР°СЏ РїСЂРѕРІРµСЂРєРё С…РѕРґР° РєРѕСЂРѕР»СЏ;
+    /// переменная проверки хода короля;
     int step = 0;
-    /// РїРµСЂРµРјРµРЅРЅР°СЏ РїСЂРѕРІРµСЂРєРё СЂРѕРєРёСЂРѕРІРєРё;
+    /// переменная проверки рокировки;
     bool castling = false;
-    /// РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Р№ РІРµРєС‚РѕСЂ РєР»РµС‚РѕРє РґР»СЏ СЂРѕРєРёСЂРѕРІРєРё;
+    /// вспомогательный вектор клеток для рокировки;
     vector <int*> castling_cells;
 public:
-    /// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    /// конструктор
     King(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}
-    virtual void draw(int type0, int x_cell0, int y_cell0) override;                    // СЂРёСЃРѕРІР°РЅРёРµ
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;        // РїСЂРѕСЃС‡С‘С‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґРѕРІ
+    virtual void draw(int type0, int x_cell0, int y_cell0) override;                    // рисование
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;        // просчёт возможности ходов
     virtual void change() override{}
     int get_step();
     void set_step(int step0);
@@ -28,14 +28,14 @@ public:
     void set_castling_cells(vector <int*> castling_cells0);
 };
 /**
- Р¤СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ РєРѕСЂРѕР»СЏ;
- \param x  - РєРѕРѕСЂРґРёРЅР°С‚Р° РєРѕСЂРѕР»СЏ РїРѕ РѕСЃРё x;
- \param y  - РєРѕРѕСЂРґРёРЅР°С‚Р° РєРѕСЂРѕР»СЏ РїРѕ РѕСЃРё y;
- \param r  - СЂР°Р·РјРµСЂ РєРѕСЂРѕР»СЏ.
+ Функция рисования короля;
+ \param x  - координата короля по оси x;
+ \param y  - координата короля по оси y;
+ \param r  - размер короля.
  */
 void King::draw(int x, int y, int r){
     txSetColor(side_color,2);
-    txSetFillColor (RGB (255, 215, 0)); // Р·РѕР»РѕС‚Рѕ РґР»СЏ РєРѕСЂРѕРЅС‹
+    txSetFillColor (RGB (255, 215, 0)); // золото для короны
 
     POINT headtop[25] = {{(6*r)+x, (0*r)+y}, {(7*r)+x, (6*r)+y}, {(8*r)+x, (0*r)+y},
                      {(9*r)+x, (6*r)+y}, {(10*r)+x, (0*r)+y}, {(11*r)+x, (6*r)+y},
@@ -44,7 +44,7 @@ void King::draw(int x, int y, int r){
                      {(14*r)+x, (8*r)+y}, {(12*r)+x, (18*r)+y}, {(13*r)+x, (18*r)+y},
                      {(13*r)+x, (19*r)+y}, {(14*r)+x, (19*r)+y}, {(14*r)+x, (20*r)+y},
                      {(8*r)+x, (20*r)+y}, {(8*r)+x, (19*r)+y}, {(9*r)+x, (19*r)+y},
-                     {(9*r)+x, (18*r)+y}, {(10*r)+x, (18*r)+y}, {(8*r)+x, (8*r)+y}, {(6*r)+x, (8*r)+y}}; //"РіРѕР»РѕРІР°", РјРµРЅСЏРµС‚СЃСЏ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С„РёРіСѓСЂС‹
+                     {(9*r)+x, (18*r)+y}, {(10*r)+x, (18*r)+y}, {(8*r)+x, (8*r)+y}, {(6*r)+x, (8*r)+y}}; //"голова", меняется в зависимости от фигуры
     txPolygon (headtop, 25);
 
     /*POINT headnottop[26] = {{(2*r)+x, (0*r)+y}, {(3*r)+x, (4*r)+y}, {(3*r)+x, (0*r)+y},
@@ -55,37 +55,37 @@ void King::draw(int x, int y, int r){
                            {(7*r)+x, (9*r)+y}, {(7*r)+x, (10*r)+y}, {(8*r)+x, (10*r)+y},
                            {(8*r)+x, (11*r)+y}, {(3*r)+x, (11*r)+y}, {(3*r)+x, (10*r)+y},
                            {(4*r)+x, (10*r)+y}, {(4*r)+x, (9*r)+y}, {(5*r)+x, (9*r)+y},
-                           {(4*r)+x, (5*r)+y}, {(2*r)+x, (5*r)+y}}; //"РіРѕР»РѕРІР°", РјРµРЅСЏРµС‚СЃСЏ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С„РёРіСѓСЂС‹
+                           {(4*r)+x, (5*r)+y}, {(2*r)+x, (5*r)+y}}; //"голова", меняется в зависимости от фигуры
     txPolygon (headnottop, 26);*/
 
-    txSetFillColor (main_color); // РѕСЃРЅРѕРІРЅРѕР№ С†РІРµС‚ (Р±РµР»С‹Р№)
-    //txSetFillColor (RGB (255, 255, 255)); ///< РѕСЃРЅРѕРІРЅРѕР№ С†РІРµС‚ (С‡С‘СЂРЅС‹Р№)
+    txSetFillColor (main_color); // основной цвет (белый)
+    //txSetFillColor (RGB (255, 255, 255)); ///< основной цвет (чёрный)
 
-    POINT body[4] = {{(10*r)+x, (20*r)+y}, {(12*r)+x, (20*r)+y}, {(16*r)+x, (40*r)+y}, {(6*r)+x, (40*r)+y}}; // РЅРµРёР·РјРµРЅСЏРµРјРѕРµ С‚РµР»Рѕ
+    POINT body[4] = {{(10*r)+x, (20*r)+y}, {(12*r)+x, (20*r)+y}, {(16*r)+x, (40*r)+y}, {(6*r)+x, (40*r)+y}}; // неизменяемое тело
     txPolygon (body, 4);
 
-    POINT stand1[4] = {{(4*r)+x, (40*r)+y}, {(18*r)+x, (40*r)+y}, {(18*r)+x, (42*r)+y}, {(4*r)+x, (42*r)+y}}; // РїРµСЂРІР°СЏ РїРѕРґСЃС‚Р°РІРєР° РґР»СЏ РІСЃРµС…, Р° Сѓ РїРµС€РµРє С‚РѕР»СЊРєРѕ РѕРЅР°
+    POINT stand1[4] = {{(4*r)+x, (40*r)+y}, {(18*r)+x, (40*r)+y}, {(18*r)+x, (42*r)+y}, {(4*r)+x, (42*r)+y}}; // первая подставка для всех, а у пешек только она
     txPolygon (stand1, 4);
 
-    POINT stand2[4] = {{(2*r)+x, (42*r)+y}, {(20*r)+x, (42*r)+y}, {(20*r)+x, (44*r)+y}, {(2*r)+x, (44*r)+y}}; // РІС‚РѕСЂР°СЏ РїРѕРґСЃС‚Р°РІРєР° РґР»СЏ СЃСЂРµРґРЅРёС…(Р»Р°РґСЊСЏ,СЃР»РѕРЅ,РєРѕРЅСЊ) Рё Р»СѓС‡С€РёС…
+    POINT stand2[4] = {{(2*r)+x, (42*r)+y}, {(20*r)+x, (42*r)+y}, {(20*r)+x, (44*r)+y}, {(2*r)+x, (44*r)+y}}; // вторая подставка для средних(ладья,слон,конь) и лучших
     txPolygon (stand2, 4);
 
-    POINT stand3[4] = {{(0*r)+x, (44*r)+y}, {(22*r)+x, (44*r)+y}, {(22*r)+x, (46*r)+y}, {(0*r)+x, (46*r)+y}};// С‚СЂРµС‚СЊСЏ РїРѕРґСЃС‚Р°РІРєР° РґР»СЏ Р»СѓС‡С€РёС…(С„РµСЂР·РµР№, РєРѕСЂРѕР»РµР№)
+    POINT stand3[4] = {{(0*r)+x, (44*r)+y}, {(22*r)+x, (44*r)+y}, {(22*r)+x, (46*r)+y}, {(0*r)+x, (46*r)+y}};// третья подставка для лучших(ферзей, королей)
     txPolygon (stand3, 4);
 }
 /**
- Р¤СѓРЅРєС†РёСЏ РїСЂРѕСЃС‡С‘С‚Р° РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґР°;
+ Функция просчёта возможности хода;
 
- \param figures  - РІРµРєС‚РѕСЂ С„РёРіСѓСЂ.
+ \param figures  - вектор фигур.
 
- РљРѕСЂРѕР»СЊ С…РѕРґРёС‚ Рё РµСЃС‚ РІРѕ РІСЃРµ СЃС‚РѕСЂРѕРЅС‹ РЅР° РѕРґРЅСѓ РєР»РµС‚РєСѓ;
+ Король ходит и ест во все стороны на одну клетку;
 
 */
 void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
     move_ability_cells.clear();
     castling_cells.clear();
     if((x_cell+1) < 8 && (y_cell-1) >= 0)
-    {                                           // РІРІРµСЂС… РїСЂР°РІРѕ
+    {                                           // вверх право
         int* cell = new int[2];
         cell[0] = y_cell - 1;
         cell[1] = x_cell + 1;
@@ -101,7 +101,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((x_cell -1) >= 0 && (y_cell-1) >= 0)
-    {                                           // РІРІРµСЂС… РІР»РµРІРѕ
+    {                                           // вверх влево
         int* cell = new int[2];
         cell[0] = y_cell - 1;
         cell[1] = x_cell - 1;
@@ -117,7 +117,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((x_cell+1) < 8 && (y_cell+1) < 8)
-    {                                           // РІРЅРёР· РІРїСЂР°РІРѕ
+    {                                           // вниз вправо
         int* cell = new int[2];
         cell[0] = y_cell + 1;
         cell[1] = x_cell + 1;
@@ -133,7 +133,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((x_cell-1) >= 0 && (y_cell+1) < 8)
-    {                                           // РІРЅРёР· РІР»РµРІРѕ
+    {                                           // вниз влево
         int* cell = new int[2];
         cell[0] = y_cell + 1;
         cell[1] = x_cell - 1;
@@ -149,7 +149,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((y_cell-1) >= 0)
-    {                                           // РІРІРµСЂС…
+    {                                           // вверх
         int* cell = new int[2];
         cell[0] = y_cell - 1;
         cell[1] = x_cell;
@@ -165,7 +165,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((y_cell+1) < 8)
-    {                                           // РІРЅРёР·
+    {                                           // вниз
         int* cell = new int[2];
         cell[0] = y_cell + 1;
         cell[1] = x_cell;
@@ -181,7 +181,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
     }
     if((x_cell+1) < 8)
-    {                                           // РІРїСЂР°РІРѕ
+    {                                           // вправо
         int* cell = new int[2];
         cell[0] = y_cell;
         cell[1] = x_cell + 1;
@@ -196,7 +196,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
             }
         }
     }
-    if((x_cell-1) >= 0) {                       // РІР»РµРІРѕ
+    if((x_cell-1) >= 0) {                       // влево
         int* cell = new int[2];
         cell[0] = y_cell;
         cell[1] = x_cell - 1;
@@ -211,7 +211,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
             }
         }
     }
-    if((y_cell == 7) && (x_cell == 4)){         // СЂРѕРєРёСЂРѕРІРєР° РґР»СЏ Р±РµР»С‹С…
+    if((y_cell == 7) && (x_cell == 4)){         // рокировка для белых
         Rook* rook;
         int prov = 1;
         for(auto figura : figures) {
@@ -256,7 +256,7 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
 
     }
-    if((y_cell == 0) && (x_cell == 4)){          // СЂРѕРєРёСЂРѕРІРєР° РґР»СЏ С‡РµСЂРЅС‹С…
+    if((y_cell == 0) && (x_cell == 4)){          // рокировка для черных
         Rook* rook;
         int prov = 1;
         for(auto figura : figures) {
@@ -304,40 +304,40 @@ void King :: count_move_ability_cells(vector<BaseFigure*> figures) {
    // if((y_cell == 7) && (x_cell == 6))
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РІРѕР·СЂР°С‰Р°РµС‚ РїРµСЂРµРјРµРЅРЅСѓСЋ step;
+ Функция, которая возращает переменную step;
 */
 int King::get_step() {
     return step;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РїСЂРёСЃРІР°РµРІР°РµС‚ С…РѕРґ (step) РєРѕСЂРѕР»СЏ;
- \param step0  - РїСЂРѕРІРµСЂРєР° С…РѕРґР° РєРѕСЂРѕР»СЏ;
+ Функция, которая присваевает ход (step) короля;
+ \param step0  - проверка хода короля;
 */
 void King::set_step(int step0) {
     step = step0;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РІРѕР·СЂР°С‰Р°СЋС‰Р°СЏ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРѕРєРёСЂРѕРІРєРё;
+ Функция, возращающая состояние рокировки;
 */
 bool King::get_castling() {
     return castling;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РїСЂРёСЃРІР°РµРІР°РµС‚ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРѕРєРёСЂРѕРІРєРё (castling);
- \param castling0  - РїСЂРѕРІРµСЂРєР° СЂРѕРєРёСЂРѕРІРєРё;
+ Функция, которая присваевает состояние рокировки (castling);
+ \param castling0  - проверка рокировки;
 */
 void King::set_castling(bool castling0) {
     castling = castling0;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РІРѕР·СЂР°С‰Р°СЋС‰Р°СЏ РІРµРєС‚РѕСЂ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё СЂРѕРєРёСЂРѕРІРєРё;
+ Функция, возращающая вектор возможности рокировки;
 */
 vector <int*> King::get_castling_cells() {
     return castling_cells;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РїСЂРёСЃРІР°РµРІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ РІРµРєС‚РѕСЂР° РґР»СЏ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё СЂРѕРєРёСЂРѕРІРєРё (castling_cells);
- \param castling_cells0  - РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Р№ РІРµРєС‚РѕСЂ РєР»РµС‚РѕРє РґР»СЏ СЂРѕРєРёСЂРѕРІРєРё;
+ Функция, которая присваевает значение вектора для возможности рокировки (castling_cells);
+ \param castling_cells0  - вспомогательный вектор клеток для рокировки;
 */
 void King::set_castling_cells(vector <int*> castling_cells0) {
     castling_cells = castling_cells0;

@@ -2,72 +2,72 @@
 
 #include <TXlib.h>
 /** @author Michael Kulik
- Ğ¤ÑƒĞ½ĞºÑ†Ğ¸Ñ Ğ½Ğ°Ñ‡Ğ°Ğ»ÑŒĞ½Ğ¾Ğ¹ Ñ€Ğ°ÑÑÑ‚Ğ°Ğ½Ğ¾Ğ²ĞºĞ¸ Ñ„Ğ¸Ğ³ÑƒÑ€
+ Ôóíêöèÿ íà÷àëüíîé ğàññòàíîâêè ôèãóğ
 */
 
 void start_part()
 {
-    for(int i = 7; i >= 0; i--) // Ğ¿ĞµÑˆĞºĞ¸ Ğ±ĞµĞ»Ñ‹Ğµ
+    for(int i = 7; i >= 0; i--) // ïåøêè áåëûå
     {
         figures.push_back(new Pawn(0,i,1));
         cells[6][i]->set_figure(figures.back());
     }
 
-    for(int j = 7; j >= 0; j--) // Ğ¿ĞµÑˆĞºĞ¸ Ñ‡Ñ‘Ñ€Ğ½Ñ‹Ğµ
+    for(int j = 7; j >= 0; j--) // ïåøêè ÷¸ğíûå
     {
         figures.push_back(new Pawn(1,j,6));
         cells[1][j]->set_figure(figures.back());
     }
 
-    // Ğ»Ğ°Ğ´ÑŒĞ¸ Ğ±ĞµĞ»Ñ‹Ğµ
+    // ëàäüè áåëûå
     figures.push_back(new Rook(0, 0, 7));
     cells[7][0]->set_figure(figures.back());
     figures.push_back(new Rook(0,7,7));
     cells[7][7]->set_figure(figures.back());
 
-    // Ğ»Ğ°Ğ´ÑŒĞ¸ Ñ‡Ñ‘Ñ€Ğ½Ñ‹Ğµ
+    // ëàäüè ÷¸ğíûå
     figures.push_back(new Rook(1, 0, 0));
     cells[0][0]->set_figure(figures.back());
     figures.push_back(new Rook(1, 7, 0));
     cells[0][7]->set_figure(figures.back());
 
-    // ĞºĞ¾Ğ½Ğ¸ Ğ±ĞµĞ»Ñ‹Ğµ
+    // êîíè áåëûå
     figures.push_back(new Knight(0, 1, 7));
     cells[7][1]->set_figure(figures.back());
     figures.push_back(new Knight(0, 6, 7));
     cells[7][6]->set_figure(figures.back());
 
-    // ĞºĞ¾Ğ½Ğ¸ Ñ‡Ñ‘Ñ€Ğ½Ñ‹Ğµ
+    // êîíè ÷¸ğíûå
     figures.push_back(new Knight(1, 1, 0));
     cells[0][1]->set_figure(figures.back());
     figures.push_back(new Knight(1, 6, 0));
     cells[0][6]->set_figure(figures.back());
 
-    // ÑĞ»Ğ¾Ğ½Ñ‹ Ğ±ĞµĞ»Ñ‹Ğµ
+    // ñëîíû áåëûå
     figures.push_back(new Bishop(0, 2, 7));
     cells[7][2]->set_figure(figures.back());
     figures.push_back(new Bishop(0, 5, 7));
     cells[7][5]->set_figure(figures.back());
 
-    // ÑĞ»Ğ¾Ğ½Ñ‹ Ñ‡Ñ‘Ñ€Ğ½Ñ‹Ğµ
+    // ñëîíû ÷¸ğíûå
     figures.push_back(new Bishop(1, 2, 0));
     cells[0][2]->set_figure(figures.back());
     figures.push_back(new Bishop(1, 5, 0));
     cells[0][5]->set_figure(figures.back());
 
-    // Ñ„ĞµÑ€Ğ·ÑŒ Ğ±ĞµĞ»Ñ‹Ğ¹
+    // ôåğçü áåëûé
     figures.push_back(new Queen(0, 3, 7));
     cells[7][3]->set_figure(figures.back());
 
-    // Ñ„ĞµÑ€Ğ·ÑŒ Ñ‡Ñ‘Ñ€Ğ½Ñ‹Ğ¹
+    // ôåğçü ÷¸ğíûé
     figures.push_back(new Queen(1, 3, 0));
     cells[0][3]->set_figure(figures.back());
 
-    // ĞºĞ¾Ñ€Ğ¾Ğ»ÑŒ Ğ±ĞµĞ»Ñ‹Ğ¹
+    // êîğîëü áåëûé
     figures.push_back(new King(0, 4, 7));
     cells[7][4]->set_figure(figures.back());
 
-    // ĞºĞ¾Ñ€Ğ¾Ğ»ÑŒ Ñ‡Ñ‘Ñ€Ğ½Ñ‹Ğ¹
+    // êîğîëü ÷¸ğíûé
     figures.push_back(new King(1, 4, 0));
     cells[0][4]->set_figure(figures.back());
 }

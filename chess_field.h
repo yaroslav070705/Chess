@@ -3,53 +3,53 @@
 /**
  @author Yaroslav, Roma, Anna
 
- ChessField - РєР»Р°СЃСЃ РїРѕР»СЏ;
+ ChessField - класс поля;
 */
 
-class ChessField {  // РєР»Р°СЃСЃ РїРѕР»СЏ
+class ChessField {  // класс поля
  private:
-    /// РјР°СЃСЃРёРІ РєР»РµС‚РѕРє РїРѕР»СЏ
+    /// массив клеток поля
     Cell* cells[8][8];
-    /// РІРµРєС‚РѕСЂ С„РёРіСѓСЂ
+    /// вектор фигур
     vector<BaseFigure*> figures;
 
-    /// СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєР»РµС‚РєСѓ РІ С„РѕРєСѓСЃРµ
+    /// указатель на клетку в фокусе
     Cell* cell_in_focus = nullptr;
-    /// СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С„РёРіСѓСЂСѓ РІ С„РѕРєСѓСЃРµ
+    /// указатель на фигуру в фокусе
     BaseFigure* figure_in_focus = nullptr;
-    /// РІРµРєС‚РѕСЂ СЃСЉРµРґРµРЅРЅС‹С… Р±РµР»С‹С… С„РёРіСѓСЂ
+    /// вектор съеденных белых фигур
     vector<BaseFigure*> white_dead_figures;
-    /// РІРµРєС‚РѕСЂ СЃСЉРµРґРµРЅРЅС‹С… Р±РµР»С‹С… С„РёРіСѓСЂ
+    /// вектор съеденных белых фигур
     vector<BaseFigure*> black_dead_figures;
 
-    /// РїРµСЂРµРјРµРЅРЅР°СЏ РѕС‚СЃС‚СѓРїР° РїРѕ x
+    /// переменная отступа по x
     int spase_x = 280;
-    /// РїРµСЂРµРјРµРЅРЅР°СЏ РѕС‚СЃС‚СѓРїР° РїРѕ y
+    /// переменная отступа по y
     int space_y = 55;
-    /// РїРµСЂРµРјРµРЅРЅР°СЏ С‚РѕР»С‰РёРЅС‹
+    /// переменная толщины
     int side = 85;
 
-    /// РїРµСЂРµРјРµРЅРЅР°СЏ СЃРјРµРЅС‹ С…РѕРґР°
+    /// переменная смены хода
     int turn = 0;
-    /// РїРµСЂРµРјРµРЅРЅР°СЏ РІС‹РёРіСЂР°РІС€РµР№ СЃС‚РѕСЂРѕРЅС‹
+    /// переменная выигравшей стороны
     int win_side;
-    /// РїСЂРѕРІРµСЂРєР° СЃРјРµРЅС‹ С…РѕРґР°
+    /// проверка смены хода
     bool turn_changed = false;
 
  public:
-    /// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    /// конструктор
     ChessField();
-    void _add_cells();                      // РґРѕР±Р°РІР»РµРЅРёРµ РєР»РµС‚РѕРє
-    void _add_figures();                    // РґРѕР±Р°РІР»РµРЅРёРµ С„РёРіСѓСЂ
-    void _draw_field();                     // СЂРёСЃРѕРІР°РЅРёРµ РїРѕР»СЏ
-    void _draw_figures();                   // СЂРёСЃРѕРІР°РЅРёРµ С„РёРіСѓСЂ
-    void _draw_move_ability_cells();        // СЂРёСЃРѕРІР°РЅРёРµ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґРѕРІ
+    void _add_cells();                      // добавление клеток
+    void _add_figures();                    // добавление фигур
+    void _draw_field();                     // рисование поля
+    void _draw_figures();                   // рисование фигур
+    void _draw_move_ability_cells();        // рисование возможности ходов
     void _draw_dead_figures();
     void _draw_castling_cells();
     void draw();
 
-   // void check_click();                     // РїСЂРѕРІРµСЂРєР° РЅР°Р¶Р°С‚РёСЏ РЅР° РєР»РµС‚РєСѓ
-   // void move_figure();                     // РїРµСЂРµРґРІРёР¶РµРЅРёРµ С„РёРіСѓСЂС‹
+   // void check_click();                     // проверка нажатия на клетку
+   // void move_figure();                     // передвижение фигуры
     bool check_click();
 
     //void pawn_to_queen();
@@ -62,7 +62,7 @@ ChessField::ChessField(){
     _add_figures();
 }
 /**
- Р¤СѓРЅРєС†РёСЏ РґРѕР±Р°РІР»РµРЅРёСЏ РєР»РµС‚РѕРє РЅР° РїРѕР»Рµ;
+ Функция добавления клеток на поле;
 */
 void ChessField::_add_cells(){
     for(int i = 0; i < 8; i++){
@@ -87,7 +87,7 @@ void ChessField::_add_cells(){
     }
 }
 /**
- Р¤СѓРЅРєС†РёСЏ РґРѕР±Р°РІР»РµРЅРёСЏ С„РёРіСѓСЂ РЅР° РїРѕР»Рµ;
+ Функция добавления фигур на поле;
 */
 void ChessField::_add_figures(){
     /*figures.push_back(new Rook(0,0,1,TX_WHITE,TX_BLACK));
@@ -106,71 +106,71 @@ void ChessField::_add_figures(){
     cells[6][5]->set_figure(figures.back());
     figures.push_back(new Pawn(1,1,4,TX_WHITE,TX_BLACK));
     cells[4][1]->set_figure(figures.back());*/
-    for(int i = 7; i >= 0; i--){ // РїРµС€РєРё Р±РµР»С‹Рµ
+    for(int i = 7; i >= 0; i--){ // пешки белые
         figures.push_back(new Pawn(0,i,6,TX_WHITE,TX_BLACK));
         cells[6][i]->set_figure(figures.back());
     }
 
-    for(int j = 7; j >= 0; j--){ // РїРµС€РєРё С‡С‘СЂРЅС‹Рµ
+    for(int j = 7; j >= 0; j--){ // пешки чёрные
         figures.push_back(new Pawn(1,j,1,TX_BLACK,TX_WHITE));
         cells[1][j]->set_figure(figures.back());
     }
 
-    // Р»Р°РґСЊРё Р±РµР»С‹Рµ
+    // ладьи белые
     figures.push_back(new Rook(0, 0, 7,TX_WHITE,TX_BLACK));
     cells[7][0]->set_figure(figures.back());
     figures.push_back(new Rook(0,7,7,TX_WHITE,TX_BLACK));
     cells[7][7]->set_figure(figures.back());
 
-    // Р»Р°РґСЊРё С‡С‘СЂРЅС‹Рµ
+    // ладьи чёрные
     figures.push_back(new Rook(1, 0, 0,TX_BLACK,TX_WHITE));
     cells[0][0]->set_figure(figures.back());
     figures.push_back(new Rook(1, 7, 0,TX_BLACK,TX_WHITE));
     cells[0][7]->set_figure(figures.back());
 
-    // РєРѕРЅРё Р±РµР»С‹Рµ
+    // кони белые
     figures.push_back(new Knight(0, 1, 7,TX_WHITE,TX_BLACK));
     cells[7][1]->set_figure(figures.back());
     figures.push_back(new Knight(0, 6, 7,TX_WHITE,TX_BLACK));
     cells[7][6]->set_figure(figures.back());
 
-    // РєРѕРЅРё С‡С‘СЂРЅС‹Рµ
+    // кони чёрные
     figures.push_back(new Knight(1, 1, 0,TX_BLACK,TX_WHITE));
     cells[0][1]->set_figure(figures.back());
     figures.push_back(new Knight(1, 6, 0,TX_BLACK,TX_WHITE));
     cells[0][6]->set_figure(figures.back());
 
-    // СЃР»РѕРЅС‹ Р±РµР»С‹Рµ
+    // слоны белые
     figures.push_back(new Bishop(0, 2, 7,TX_WHITE,TX_BLACK));
     cells[7][2]->set_figure(figures.back());
     figures.push_back(new Bishop(0, 5, 7,TX_WHITE,TX_BLACK));
     cells[7][5]->set_figure(figures.back());
 
-    // СЃР»РѕРЅС‹ С‡С‘СЂРЅС‹Рµ
+    // слоны чёрные
     figures.push_back(new Bishop(1, 2, 0,TX_BLACK,TX_WHITE));
     cells[0][2]->set_figure(figures.back());
     figures.push_back(new Bishop(1, 5, 0,TX_BLACK,TX_WHITE));
     cells[0][5]->set_figure(figures.back());
 
-    // С„РµСЂР·СЊ Р±РµР»С‹Р№
+    // ферзь белый
     figures.push_back(new Queen(0, 3, 7,TX_WHITE,TX_BLACK));
     cells[7][3]->set_figure(figures.back());
 
-    // С„РµСЂР·СЊ С‡С‘СЂРЅС‹Р№
+    // ферзь чёрный
     figures.push_back(new Queen(1, 3, 0,TX_BLACK,TX_WHITE));
     cells[0][3]->set_figure(figures.back());
 
-    // РєРѕСЂРѕР»СЊ Р±РµР»С‹Р№
+    // король белый
     figures.push_back(new King(0, 4, 7,TX_WHITE,TX_BLACK));
     cells[7][4]->set_figure(figures.back());
 
-    // РєРѕСЂРѕР»СЊ С‡С‘СЂРЅС‹Р№
+    // король чёрный
     figures.push_back(new King(1, 4, 0,TX_BLACK,TX_WHITE));
     cells[0][4]->set_figure(figures.back());
 
 }
 /**
- Р¤СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ РїРѕР»СЏ;
+ Функция рисования поля;
 */
 void ChessField::_draw_field() {
     for(int i = 0; i < 8; i++){
@@ -180,7 +180,7 @@ void ChessField::_draw_field() {
     }
 }
 /**
- Р¤СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ С„РёРіСѓСЂ РЅР° РїРѕР»Рµ;
+ Функция рисования фигур на поле;
 */
 void ChessField::_draw_figures(){
     King* king;
@@ -220,16 +220,16 @@ void ChessField::_draw_figures(){
     }
 }
 /**
- Р¤СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґР° РґР»СЏ С„РёРіСѓСЂ;
+ Функция рисования возможности хода для фигур;
 
- РљР»РµС‚РєР°, РЅР° РєРѕС‚РѕСЂСѓСЋ РјРѕР¶РµС‚ СЃС…РѕРґРёС‚СЊ РІР°С€Р° С„РёРіСѓСЂР°, РїРѕРґСЃРІРµС‡РёРІР°РµС‚СЃСЏ СЂРѕР·РѕРІС‹Рј С†РІРµС‚РѕРј;
+ Клетка, на которую может сходить ваша фигура, подсвечивается розовым цветом;
 */
 void ChessField::_draw_move_ability_cells(){
     //cout<<"4"<<'\n';
     int side_bold = 5;
     vector <int*> move_ability_cells;
     if(cell_in_focus){
-        if(cell_in_focus->get_figure() && (figure_in_focus->get_type() == turn)){
+        if(cell_in_focus->get_figure()){
             move_ability_cells = cell_in_focus->get_figure()->get_move_ability_cells();
         }
     }
@@ -250,9 +250,9 @@ void ChessField::_draw_move_ability_cells(){
     }
 }
 /**
- Р¤СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ СЃСЉРµРґРµРЅРЅС‹С… С„РёРіСѓСЂ;
+ Функция рисования съеденных фигур;
 
- РќР° СЌРєСЂР°РЅРµ СЂРёСЃСѓРµС‚СЃСЏ СЃРїРµС†РёР°Р»СЊРЅРѕРµ РїРѕР»Рµ РґР»СЏ СЃСЉРµРґРµРЅРЅС‹С… С„РёРіСѓСЂ РєР°Р¶РґРѕРіРѕ С†РІРµС‚Р°;
+ На экране рисуется специальное поле для съеденных фигур каждого цвета;
 */
 void ChessField::_draw_dead_figures(){
     King* king;
@@ -332,9 +332,9 @@ void ChessField::_draw_dead_figures(){
     }
 }
 /**
- Р¤СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёРµ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё СЂРѕРєРёСЂРѕРІРєРё РґР»СЏ С„РёРіСѓСЂ;
+ Функция рисование возможности рокировки для фигур;
 
- РџРѕСЃР»Рµ РЅР°Р¶Р°С‚РёСЏ РЅР° РєРѕСЂРѕР»СЏ, РїСЂРё РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё СЂРѕРєРёСЂРѕРІРєРё, РєР»РµС‚РєР° Р»Р°РґСЊРё РїРѕРґСЃРІРµС‡РёРІР°РµС‚СЃСЏ Р¶С‘Р»С‚С‹Рј С†РІРµС‚РѕРј;
+ После нажатия на короля, при возможности рокировки, клетка ладьи подсвечивается жёлтым цветом;
 */
 void ChessField::_draw_castling_cells(){
     int side_bold = 5;
@@ -359,9 +359,9 @@ void ChessField::_draw_castling_cells(){
     }
 }
 /**
- РЎРѕРІРјРµС‰С‘РЅРЅР°СЏ С„СѓРЅРєС†РёСЏ РІСЃРµС… СЂРёСЃРѕРІР°РЅРёР№;
+ Совмещённая функция всех рисований;
 
- Р’ РЅРµС‘ РІРєР»СЋС‡Р°РµС‚СЃСЏ: СЂРёСЃРѕРІР°РЅРёРµ РїРѕР»СЏ, С„РёРіСѓСЂ РЅР° РїРѕР»Рµ, РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґР° С„РёРіСѓСЂ, РєР»РµС‚РѕРє СЂРѕРєРёСЂРѕРІРєРё, СЃСЉРµРґРµРЅРЅС‹С… С„РёРіСѓСЂ;
+ В неё включается: рисование поля, фигур на поле, возможности хода фигур, клеток рокировки, съеденных фигур;
 */
 void ChessField::draw(){
     _draw_field();
@@ -438,7 +438,7 @@ void ChessField::move_figure(){
 
 } */
 /**
- РћСЃРЅРѕРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РїСЂРѕРІРµСЂРѕРє РЅР°Р¶Р°С‚РёСЏ РЅР° РєР»РµС‚РєРё РїРѕР»СЏ;
+ Основная функция проверок нажатия на клетки поля;
 */
 bool ChessField::check_click(){
     King* king = nullptr;
@@ -479,7 +479,6 @@ bool ChessField::check_click(){
                             figure_in_focus->set_y_cell(chosen_y_cell);
                             figure_in_focus->set_x_cell(chosen_x_cell);
 
-                            //////////////
                             if(turn == 0){
                                 turn = 1;
                             }
@@ -551,10 +550,8 @@ bool ChessField::check_click(){
                     ////////
                 }
             }
-            /////
             cell_in_focus = cells[chosen_y_cell][chosen_x_cell];
             cell_in_focus-> set_focus(true);
-            /////
             if(cell_in_focus->get_figure()){
                 figure_in_focus = cell_in_focus->get_figure();
                 cell_in_focus->get_figure()->count_move_ability_cells(figures);
@@ -570,31 +567,31 @@ bool ChessField::check_click(){
     return false;
 }
 
-/*void ChessField::pawn_to_queen(){ ///< \parametr pOther - РјР°СЃСЃРёРІ С„РёРіСѓСЂ
-    bool broken = false; ///< РџРµСЂРµРјРµРЅРЅР°СЏ РѕС‚РІРµС‡Р°СЋС‰Р°СЏ Р·Р° С‚Рѕ РїРѕР±РёС‚Р°СЏ С„РёРіСѓСЂР° РёР»Рё РЅРµС‚ (РєРѕРіРґР° РїРµС€РєР° СЃС‚Р°РЅРѕРІРёС‚СЃСЏ С„РµСЂР·РµРј РѕРЅР° РЅРµ РґРѕР»Р¶РЅР° РїРѕРїР°РґР°С‚СЊ РІ Р±РёС‚С‹Рµ С„РёРіСѓСЂС‹), РёР·РЅР°С‡Р°Р»СЊРЅРѕ true
-    bool queen = false; ///< РџРµСЂРµРјРµРЅРЅР°СЏ РѕС‚РІРµС‡Р°СЋС‰Р°СЏ Р·Р° С‚Рѕ РІС‹Р±СЂР°РЅ Р»Рё С„РµСЂР·СЊ
+/*void ChessField::pawn_to_queen(){ ///< \parametr pOther - массив фигур
+    bool broken = false; ///< Переменная отвечающая за то побитая фигура или нет (когда пешка становится ферзем она не должна попадать в битые фигуры), изначально true
+    bool queen = false; ///< Переменная отвечающая за то выбран ли ферзь
 
 
-    auto pPawn = dynamic_cast<Pawn*>(figures); ///< СЃРѕР·РґР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ
-    if pPawn ///< РµСЃР»Рё РїРµС€РєР°
+    auto pPawn = dynamic_cast<Pawn*>(figures); ///< создаем указатель
+    if pPawn ///< если пешка
     {
         int y = pPawn->get_y_cell()
         int x = pPawn->get_x_cell()
 
-        if(y == 0) ///< РµСЃР»Рё РїРµС€РєР° РёРјРµРµС‚ РєРѕРѕСЂРґРёРЅР°С‚Сѓ y == 0
+        if(y == 0) ///< если пешка имеет координату y == 0
         {
-            if queen ///< РµСЃР»Рё РІС‹Р±СЂР°РЅ С„РµСЂР·СЊ
+            if queen ///< если выбран ферзь
             {
-                /// РЎРѕР·РґР°РµРј Р¤РµСЂР·СЏ РЅР° РјРµСЃС‚Рµ РїРµС€РєРё
+                /// Создаем Ферзя на месте пешки
                 figures.push_back(new Queen(0, x, 0));
                 cells[0][x]->set_figure(figures.back());
             }
         }
-        else if(y == 7) ///< РµСЃР»Рё РїРµС€РєР° i РёРјРµРµС‚ РєРѕРѕСЂРґРёРЅР°С‚Сѓ y == 7
+        else if(y == 7) ///< если пешка i имеет координату y == 7
         {
-            if queen ///< РµСЃР»Рё РІС‹Р±СЂР°РЅ С„РµСЂР·СЊ
+            if queen ///< если выбран ферзь
             {
-                /// РЎРѕР·РґР°РµРј Р¤РµСЂР·СЏ РЅР° РјРµСЃС‚Рµ РїРµС€РєРё
+                /// Создаем Ферзя на месте пешки
                 figures.push_back(new Queen(1, x, 7));
                 cells[7][x]->set_figure(figures.back());
             }
@@ -602,8 +599,8 @@ bool ChessField::check_click(){
     }
 } */
 /**
- Р¤СѓРЅРєС†РёСЏ РІС‹РІРѕРґР° С‚РµРєСЃС‚Р° РѕРєРѕРЅС‡Р°РЅРёСЏ РёРіСЂС‹;
- \param end_game  - С„Р»Р°Р¶РѕРє РѕРєРѕРЅС‡Р°РЅРёСЏ РёРіСЂС‹;
+ Функция вывода текста окончания игры;
+ \param end_game  - флажок окончания игры;
 */
 void ChessField::end(bool end_game){
     txSetFillColor(RGB(0, 191, 255));
@@ -624,10 +621,10 @@ void ChessField::end(bool end_game){
         }
     }
     else{
-        int x_cor = txGetTextExtentX("РЅРР§Р¬РЇ!");
-        int y_cor = txGetTextExtentY("РЅРР§Р¬РЇ!");
+        int x_cor = txGetTextExtentX("нИЧЬЯ!");
+        int y_cor = txGetTextExtentY("нИЧЬЯ!");
         txSetColor(TX_GRAY);
-        txTextOut((1200-x_cor)/2,(800-y_cor)/2,"РќРР§Р¬РЇ!");
+        txTextOut((1200-x_cor)/2,(800-y_cor)/2,"НИЧЬЯ!");
     }
 }
 

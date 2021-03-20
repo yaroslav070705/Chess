@@ -3,31 +3,31 @@
 /**
  @author Yaroslav, Stepan, Timofey
 
- Knight - РєР»Р°СЃСЃ С„РёРіСѓСЂС‹ РєРѕРЅСЏ;
+ Knight - класс фигуры коня;
 
- РџРѕС‚РѕРјРѕРє РєР»Р°СЃСЃР° BaseFigure.
+ Потомок класса BaseFigure.
 */
 class Knight : public BaseFigure{
  public:
-    /// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    /// конструктор
     Knight(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}
 
-    virtual void draw(int x, int y, int r) override;                                         // СЂРёСЃРѕРІР°РЅРёРµ
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;             // РїСЂРѕСЃС‡С‘С‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґРѕРІ
+    virtual void draw(int x, int y, int r) override;                                         // рисование
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;             // просчёт возможности ходов
     virtual void change() override{}
 };
 /**
- Р¤СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ РєРѕРЅСЏ;
- \param x  - РєРѕРѕСЂРґРёРЅР°С‚Р° РєРѕРЅСЏ РїРѕ РѕСЃРё x;
- \param y  - РєРѕРѕСЂРґРёРЅР°С‚Р° РєРѕРЅСЏ РїРѕ РѕСЃРё y;
- \param r  - СЂР°Р·РјРµСЂ РєРѕРЅСЏ.
+ Функция рисования коня;
+ \param x  - координата коня по оси x;
+ \param y  - координата коня по оси y;
+ \param r  - размер коня.
  */
 void Knight::draw(int x, int y, int r){
     txSetFillColor (main_color);
     txSetColor (side_color, 2);
 
     txSetFillColor (main_color);
-    POINT Knight1[13] = {{r *  3  /2 + x, r *  42   /2 + y},     // С‚РµР»Рѕ Р±РµР· СѓС€РµР№
+    POINT Knight1[13] = {{r *  3  /2 + x, r *  42   /2 + y},     // тело без ушей
                         {r *  19  /2 + x, r *  42   /2 + y},
                         {r *  18 /2 + x, r *  22   /2 + y},
                         {r *  17  /2 + x, r *  15   /2 + y},
@@ -43,21 +43,21 @@ void Knight::draw(int x, int y, int r){
     txPolygon  (Knight1, 13);
 
     txSetFillColor (main_color);
-    POINT Ears[5] = {{r *  7  /2 + x, r *  6    /2 + y},      //СѓС€Рё
+    POINT Ears[5] = {{r *  7  /2 + x, r *  6    /2 + y},      //уши
                      {r *  9 /2 + x, r *  0    /2 + y},
                      {r *  10  /2 + x, r * 6  /2 + y},
                      {r *  12 /2 + x, r *  0    /2 + y},
                      {r *  13  /2 + x, r *  6    /2 + y}};
     txPolygon  (Ears, 5);
 
-    POINT stand1[4] = {{(2*r/2)+x, (42*r/2)+y}, {(20*r/2)+x, (42*r/2)+y}, {(20*r/2)+x, (44*r/2)+y}, {(2*r/2)+x, (44*r/2)+y}}; //РїРµСЂРІР°СЏ РїРѕРґСЃС‚Р°РІРєР° РґР»СЏ РІСЃРµС…, Р° Сѓ РїРµС€РµРє С‚РѕР»СЊРєРѕ РѕРЅР°
+    POINT stand1[4] = {{(2*r/2)+x, (42*r/2)+y}, {(20*r/2)+x, (42*r/2)+y}, {(20*r/2)+x, (44*r/2)+y}, {(2*r/2)+x, (44*r/2)+y}}; //первая подставка для всех, а у пешек только она
     txPolygon (stand1, 4);
 
-    POINT stand2[4] = {{(0*r/2)+x, (44*r/2)+y}, {(22*r/2)+x, (44*r/2)+y}, {(22*r/2)+x, (46*r/2)+y}, {(0*r/2)+x, (46*r/2)+y}}; //РІС‚РѕСЂР°СЏ РїРѕРґСЃС‚Р°РІРєР° РґР»СЏ СЃСЂРµРґРЅРёС…(Р»Р°РґСЊСЏ,СЃР»РѕРЅ,РєРѕРЅСЊ) Рё Р»СѓС‡С€РёС…
+    POINT stand2[4] = {{(0*r/2)+x, (44*r/2)+y}, {(22*r/2)+x, (44*r/2)+y}, {(22*r/2)+x, (46*r/2)+y}, {(0*r/2)+x, (46*r/2)+y}}; //вторая подставка для средних(ладья,слон,конь) и лучших
     txPolygon (stand2, 4);
 
     txSetColor (side_color, 2);
-    txLine (r *  2 /2 + x, r *  23 /2 + y, r *  5 /2 + x, r *  20 /2 + y);    //РїРѕР»РѕСЃРєР° СЂС‚Р°
+    txLine (r *  2 /2 + x, r *  23 /2 + y, r *  5 /2 + x, r *  20 /2 + y);    //полоска рта
 
     txSetFillColor (TX_RED);
     //txSetFillColor (colorEYES_FOR_WHITE_FROG_IN_SWOON);
@@ -67,10 +67,10 @@ void Knight::draw(int x, int y, int r){
     txCircle(8/2*r + x,12/2*r + y,1/2 *r);
 }
 /**
- Р¤СѓРЅРєС†РёСЏ РїСЂРѕСЃС‡С‘С‚Р° РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґР°;
- \param figures  - РІРµРєС‚РѕСЂ С„РёРіСѓСЂ.
- РљРѕРЅСЊ С…РѕРґРёС‚ Рё РµСЃС‚ РЅР° РґРІР° РїРѕР»СЏ РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё РёР»Рё РїРѕ РІРµСЂС‚РёРєР°Р»Рё, Рё РЅР° РѕРґРЅСѓ РєР»РµС‚РєСѓ РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅСѓСЋ РїРµСЂРІРѕРЅР°С‡Р°Р»СЊРЅРѕРјСѓ РЅР°РїСЂР°РІР»РµРЅРёСЋ;
- РљРѕРЅСЊ РјРѕР¶РµС‚ "РїРµСЂРµРїСЂС‹РіРёРІР°С‚СЊ" С‡РµСЂРµР· РґСЂСѓРіРёРµ С„РёРіСѓСЂС‹;
+ Функция просчёта возможности хода;
+ \param figures  - вектор фигур.
+ Конь ходит и ест на два поля по горизонтали или по вертикали, и на одну клетку перпендикулярную первоначальному направлению;
+ Конь может "перепрыгивать" через другие фигуры;
 */
 void Knight::count_move_ability_cells(vector<BaseFigure*> figures){
     move_ability_cells.clear();

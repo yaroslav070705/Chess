@@ -20,9 +20,9 @@ void off_sound_func();
 void classic_style_button_func();
 void cyberpunk_style_button_func();
 void start_game();
-Button play_button(395, 250, start_game, "Играть", "Road Rage(RUS BY LYAJKA)", 70, 90, 355, RGB(247, 240, 1) , TX_BLACK, false);
+Button play_button(395, 243, start_game, "Играть", "Road Rage(RUS BY LYAJKA)", 70, 90, 355, RGB(247, 240, 1) , TX_BLACK, false);
 
-Button settings_button(395, 350, settings, "Настройки", "Road Rage(RUS BY LYAJKA)", 70, 90, 355, RGB(247, 240, 1) , TX_BLACK, false); //76, 230, 119
+Button settings_button(395, 348, settings, "Настройки", "Road Rage(RUS BY LYAJKA)", 70, 90, 355, RGB(247, 240, 1) , TX_BLACK, false); //76, 230, 119
 Button on_sound_button(460, 395, on_sound_func, "Вкл", "Road Rage(RUS BY LYAJKA)", 70, 64, 108, RGB(76, 230, 119) , TX_BLACK, false);
 Button off_sound_button(570, 395, off_sound_func, "Выкл", "Road Rage(RUS BY LYAJKA)", 70, 64, 115, RGB(230, 76, 76) , TX_BLACK, false);
 Button classic_style_button(415, 570, classic_style_button_func, "Classic Style", "Road Rage(RUS BY LYAJKA)", 40, 85, 155, RGB(247, 240, 1) , TX_BLACK, false);
@@ -53,27 +53,22 @@ void read_file(){
     file.close();
 }
 void update_style(){
-    txClear();
     if(style == 2){
         for(auto button:buttons){
             button->set_bg_color(RGB(30,144,255));
         }
-        play_button.set_y(350);
-        settings_button.set_y(450);
+        play_button.set_y();
+        settings_button.set_y();
         on_sound_button.set_y(425);
         off_sound_button.set_y(425);
 
-        txBitBlt(txDC(),0,0,1200,800,settings_pic_classic,0,0);
     }
     else{
         for(auto button:buttons){
             button->set_bg_color(RGB(247, 240, 1));
         }
-        play_button.set_y(250);
-        settings_button.set_y(350);
         on_sound_button.set_y(395);
         off_sound_button.set_y(395);
-        txBitBlt(txDC(),0,0,1200,800,settings_pic_cyberpunk,0,0);
     }
 
 }

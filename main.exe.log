@@ -1,0 +1,132 @@
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\Users\admin\Desktop\Chess-main\main.exe, файл: c:\users\admin\downloads\codeblocks\mingw\include\txlib.h, строка: 13377, функция: bool {anonymous}::TX::txBitBlt(HDC, double, double, double, double, HDC, double, double, unsigned int),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x005254F4 (32-bit), Flags: CMdRe0, Thread: 0x131C (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00422B0F in C:\Users\admin\Desktop\Chess-main\main.exe: txBitBlt() at c:/users/admin/downloads/codeblocks/mingw/include/txlib.h (13377)
+
+# 1 0x0043737F in C:\Users\admin\Desktop\Chess-main\main.exe: update_style() at C:/Users/admin/Desktop/Chess-main/functions.h (76):
+
+     74:         on_sound_button.set_y(395);
+     75:         off_sound_button.set_y(395);
+=>   76:         txBitBlt(txDC(),0,0,1200,800,settings_pic_cyberpunk,0,0);
+     77:     }
+     78: 
+
+# 2 0x00437EB8 in C:\Users\admin\Desktop\Chess-main\main.exe: main() at C:/Users/admin/Desktop/Chess-main/main.cpp (22):
+
+     20:     read_file();
+     21:     add_widgets();
+=>   22:     update_style();
+     23:     load_images();
+     24:     menu();
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txBitBlt(HDC, double, double, double, double, HDC, double, double, unsigned int) at c:\users\admin\downloads\codeblocks\mingw\include\txlib.h (13377):
+
+  13375:     {
+  13376: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>13377: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  13378: 
+  13379: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in void update_style() at C:\Users\admin\Desktop\Chess-main\functions.h (76):
+
+     74:         on_sound_button.set_y(395);
+     75:         off_sound_button.set_y(395);
+=>   76:         txBitBlt(txDC(),0,0,1200,800,settings_pic_cyberpunk,0,0);
+     77:     }
+     78: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\admin\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Mar 20 2021 09:46:25, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Mar 20 2021 09:46:31
+
+Run file:	C:\Users\admin\Desktop\Chess-main\main.exe
+Directory:	C:\Users\admin\Desktop\Chess-main
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\Users\admin\Desktop\Chess-main\main.exe, файл: c:\users\admin\downloads\codeblocks\mingw\include\txlib.h, строка: 13377, функция: bool {anonymous}::TX::txBitBlt(HDC, double, double, double, double, HDC, double, double, unsigned int),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x005254F4 (32-bit), Flags: CMdRe0, Thread: 0xAD0 (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00422B0F in C:\Users\admin\Desktop\Chess-main\main.exe: txBitBlt() at c:/users/admin/downloads/codeblocks/mingw/include/txlib.h (13377)
+
+# 1 0x0043737F in C:\Users\admin\Desktop\Chess-main\main.exe: update_style() at C:/Users/admin/Desktop/Chess-main/functions.h (76):
+
+     74:         on_sound_button.set_y(395);
+     75:         off_sound_button.set_y(395);
+=>   76:         txBitBlt(txDC(),0,0,1200,800,settings_pic_cyberpunk,0,0);
+     77:     }
+     78: 
+
+# 2 0x00437EB8 in C:\Users\admin\Desktop\Chess-main\main.exe: main() at C:/Users/admin/Desktop/Chess-main/main.cpp (22):
+
+     20:     read_file();
+     21:     add_widgets();
+=>   22:     update_style();
+     23:     load_images();
+     24:     menu();
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txBitBlt(HDC, double, double, double, double, HDC, double, double, unsigned int) at c:\users\admin\downloads\codeblocks\mingw\include\txlib.h (13377):
+
+  13375:     {
+  13376: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>13377: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  13378: 
+  13379: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in void update_style() at C:\Users\admin\Desktop\Chess-main\functions.h (76):
+
+     74:         on_sound_button.set_y(395);
+     75:         off_sound_button.set_y(395);
+=>   76:         txBitBlt(txDC(),0,0,1200,800,settings_pic_cyberpunk,0,0);
+     77:     }
+     78: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\admin\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Mar 20 2021 09:48:55, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Mar 20 2021 09:49:01
+
+Run file:	C:\Users\admin\Desktop\Chess-main\main.exe
+Directory:	C:\Users\admin\Desktop\Chess-main
+
+--------------------------------------------------

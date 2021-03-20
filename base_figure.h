@@ -3,34 +3,34 @@
 /**
  @author Yaroslav, Roma, Anna
 
- BaseFigure - Р±Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ С„РёРіСѓСЂС‹;
+ BaseFigure - базовый класс фигуры;
 */
-class BaseFigure{   // Р±Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ
+class BaseFigure{   // базовый класс
  protected:
-    /// С‚РёРї РєР»РµС‚РєРё, 1 - С‡С‘СЂРЅР°СЏ РєР»РµС‚РєР°, 0 - Р±РµР»Р°СЏ РєР»РµС‚РєР°
+    /// тип клетки, 1 - чёрная клетка, 0 - белая клетка
     int type;
-    /// РЅРѕРјРµСЂ РєР»РµС‚РєРё РїРѕ СЃС‚РѕР»Р±С†Р°Рј
+    /// номер клетки по столбцам
     int x_cell;
-    /// РЅРѕРјРµСЂ РєР»РµС‚РєРё РїРѕ СЃС‚СЂРѕРєР°Рј
+    /// номер клетки по строкам
     int y_cell;
-    /// С†РІРµС‚ Р·Р°Р»РёРІРєРё С„РёРіСѓСЂС‹
+    /// цвет заливки фигуры
     COLORREF main_color;
-    /// С†РІРµС‚ РѕРєР°РЅС‚РѕРІРєРё С„РёРіСѓСЂС‹
+    /// цвет окантовки фигуры
     COLORREF side_color;
-    /// РјР°СЃСЃРёРІ РІРѕР·РјРѕР¶РЅС‹С… С…РѕРґРѕРІ
+    /// массив возможных ходов
     vector <int*> move_ability_cells;
 
  public:
-    /// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    /// конструктор
     BaseFigure(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0);
     void move(int x_cell0, int  y_cell0);
-    /// С„СѓРЅРєС†РёСЏ РїСЂРѕСЃС‡С‘С‚Р° РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґР°
+    /// функция просчёта возможности хода
     virtual void count_move_ability_cells(vector<BaseFigure*> figures){}
-    /// С„СѓРЅРєС†РёСЏ РёР·РјРµРЅРµРЅРёСЏ
+    /// функция изменения
     virtual void change(){}
-    /// С„СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ
+    /// функция рисования
     virtual void draw(int x, int y, int r){}
-    /// С„СѓРЅРєС†РёСЏ РёР·РјРµРЅРµРЅРёСЏ + СЂРёСЃРѕРІР°РЅРёСЏ
+    /// функция изменения + рисования
     void update();
 
     int get_type();
@@ -45,10 +45,10 @@ class BaseFigure{   // Р±Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ
 
 BaseFigure::BaseFigure(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0): type(type0), x_cell(x_cell0), y_cell(y_cell0), main_color(main_color0), side_color(side_color0){}
 /**
- Р¤СѓРЅРєС†РёСЏ РґРІРёР¶РµРЅРёСЏ С„РёРіСѓСЂ РїРѕ РєР»РµС‚РєР°Рј РїРѕР»СЏ;
- \param x_cell0  - РЅРѕРјРµСЂ РєР»РµС‚РєРё РїРѕ СЃС‚РѕР»Р±С†Сѓ;
- \param y_cell0  - РЅРѕРјРµСЂ РєР»РµС‚РєРё РїРѕ СЃС‚СЂРѕРєРµ;
- РџСЂРёСЃРІР°РµРІР°РµС‚ x_cell Рё y_cell Р·РЅР°С‡РµРЅРёСЏ x_cell0 Рё y_cell0 СЃРѕРѕС‚РІРµС‚СЃС‚РІРµРЅРЅРѕ.
+ Функция движения фигур по клеткам поля;
+ \param x_cell0  - номер клетки по столбцу;
+ \param y_cell0  - номер клетки по строке;
+ Присваевает x_cell и y_cell значения x_cell0 и y_cell0 соответственно.
  */
 void BaseFigure::move (int x_cell0, int y_cell0){
     x_cell = x_cell0;
@@ -59,53 +59,53 @@ void BaseFigure::update(){
     //draw();
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РІРѕР·РІСЂР°С‰Р°РµС‚ С‚РёРї (type) РєР»РµС‚РєРё ;
+ Функция, которая возвращает тип (type) клетки ;
 */
 int BaseFigure::get_type(){
     return type;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РїСЂРёСЃРІР°РµРІР°РµС‚ С‚РёРї (type) РєР»РµС‚РєРё ;
- \param type0  - С‚РёРї РєР»РµС‚РєРё
+ Функция, которая присваевает тип (type) клетки ;
+ \param type0  - тип клетки
 */
 void BaseFigure::set_type(int type0){
     type = type0;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РІРѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ x_cell;
+ Функция, которая возвращает значение x_cell;
  */
 int BaseFigure::get_x_cell(){
     return x_cell;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РїСЂРёСЃРІР°РёРІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ x_cell;
- \param  x_cell0 - РЅРѕРјРµСЂ РєР»РµС‚РєРё РІ СЃС‚РѕР»Р±С†Рµ
+ Функция, которая присваивает значение x_cell;
+ \param  x_cell0 - номер клетки в столбце
  */
 void BaseFigure::set_x_cell(int x_cell0){
     x_cell = x_cell0;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ y_cell;
+ Функция, которя возвращает значение y_cell;
  */
 int BaseFigure::get_y_cell(){
     return y_cell;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РїСЂРёСЃРІР°РёРІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ y_cell;
- \param  y_cell0 - РЅРѕРјРµСЂ РєР»РµС‚РєРё РїРѕ СЃС‚СЂРѕРєРµ
+ Функция, которая присваивает значение y_cell;
+ \param  y_cell0 - номер клетки по строке
  */
 void BaseFigure::set_y_cell(int y_cell0){
     y_cell = y_cell0;
 }
 /**
-  Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°СЃСЃРёРІ РІРѕР·РјРѕР¶РЅС‹С… С…РѕРґРѕРІ;
+  Возвращает массив возможных ходов;
 */
 vector <int*> BaseFigure :: get_move_ability_cells(){
     return move_ability_cells;
 }
 /**
- Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РїСЂРёСЃРІР°РёРІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ move_ability_cells;
- \param  move_ability_cells0 - РІРµРєС‚РѕСЂ РІРѕР·РјРѕР¶РЅРѕСЃС‚РµР№ С…РѕРґР°
+ Функция, которая присваивает значение move_ability_cells;
+ \param  move_ability_cells0 - вектор возможностей хода
  */
 void BaseFigure::set_move_ability_cells(vector <int*> move_ability_cells0){
     move_ability_cells = move_ability_cells0;
