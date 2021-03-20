@@ -3,24 +3,24 @@
 /**
  @author Anna, Artiom, Timofey
 
- Pawn - класс фигуры пешки
+ Pawn - РєР»Р°СЃСЃ С„РёРіСѓСЂС‹ РїРµС€РєРё
 
- Потомок класса BaseFigure
+ РџРѕС‚РѕРјРѕРє РєР»Р°СЃСЃР° BaseFigure
 */
 class Pawn: public BaseFigure{
  public:
-    /// конструктор
+    /// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
     Pawn(int type0, int x_cell0, int y_cell0, COLORREF main_color0, COLORREF side_color0) : BaseFigure(type0, x_cell0, y_cell0, main_color0, side_color0){}
 
-    virtual void draw(int x, int y, int r) override;                                      // рисование
-    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;          // просчёт возможности ходов
+    virtual void draw(int x, int y, int r) override;                                      // СЂРёСЃРѕРІР°РЅРёРµ
+    virtual void count_move_ability_cells(vector<BaseFigure*> figures) override;          // РїСЂРѕСЃС‡С‘С‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґРѕРІ
     virtual void change() override{}
 };
 /**
- Функция рисования пешки;
- \param x  - координата пешки по оси x;
- \param y  - координата пешки по оси y;
- \param r  - размер пешки.
+ Р¤СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ РїРµС€РєРё;
+ \param x  - РєРѕРѕСЂРґРёРЅР°С‚Р° РїРµС€РєРё РїРѕ РѕСЃРё x;
+ \param y  - РєРѕРѕСЂРґРёРЅР°С‚Р° РїРµС€РєРё РїРѕ РѕСЃРё y;
+ \param r  - СЂР°Р·РјРµСЂ РїРµС€РєРё.
  */
 void Pawn::draw(int x, int y, int r){
     txSetColor(side_color,2);
@@ -33,27 +33,27 @@ void Pawn::draw(int x, int y, int r){
     txPolygon (pawn, 18);
 }
 /**
- Функция просчёта возможности хода;
+ Р¤СѓРЅРєС†РёСЏ РїСЂРѕСЃС‡С‘С‚Р° РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё С…РѕРґР°;
 
- \param figures  - вектор фигур.
+ \param figures  - РІРµРєС‚РѕСЂ С„РёРіСѓСЂ.
 
- Пешка ходит на одну клетку вперёд, а в свой первый ход может пойти и на две клетки ;
+ РџРµС€РєР° С…РѕРґРёС‚ РЅР° РѕРґРЅСѓ РєР»РµС‚РєСѓ РІРїРµСЂС‘Рґ, Р° РІ СЃРІРѕР№ РїРµСЂРІС‹Р№ С…РѕРґ РјРѕР¶РµС‚ РїРѕР№С‚Рё Рё РЅР° РґРІРµ РєР»РµС‚РєРё ;
 
- Ест пешка по диагонали на одно поле и только вперёд;
+ Р•СЃС‚ РїРµС€РєР° РїРѕ РґРёР°РіРѕРЅР°Р»Рё РЅР° РѕРґРЅРѕ РїРѕР»Рµ Рё С‚РѕР»СЊРєРѕ РІРїРµСЂС‘Рґ;
  */
 void Pawn :: count_move_ability_cells(vector<BaseFigure*> figures) {
     move_ability_cells.clear();
-    if(type == 0) {     // белая
+    if(type == 0) {     // Р±РµР»Р°СЏ
         int i = y_cell;
         if(y_cell != 0){
             for(auto figura : figures) {
-                if((i - 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 7)) {     // правая верхняя диагональ
+                if((i - 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 7)) {     // РїСЂР°РІР°СЏ РІРµСЂС…РЅСЏСЏ РґРёР°РіРѕРЅР°Р»СЊ
                     int* cell = new int[2];
                     cell[0] = i - 1;
                     cell[1] = x_cell + 1;
                     move_ability_cells.push_back(cell);
                 }
-                if((i - 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 0)) {     // левая верхняя диагональ
+                if((i - 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 0)) {     // Р»РµРІР°СЏ РІРµСЂС…РЅСЏСЏ РґРёР°РіРѕРЅР°Р»СЊ
                     int* cell = new int[2];
                     cell[0] = i - 1;
                     cell[1] = x_cell - 1;
@@ -61,7 +61,7 @@ void Pawn :: count_move_ability_cells(vector<BaseFigure*> figures) {
                 }
             }
             int* cell = new int[2];
-            cell[0] = i - 1;                         // клетка вверх
+            cell[0] = i - 1;                         // РєР»РµС‚РєР° РІРІРµСЂС…
             cell[1] = x_cell;
             move_ability_cells.push_back(cell);
             for(auto figura : figures) {
@@ -71,7 +71,7 @@ void Pawn :: count_move_ability_cells(vector<BaseFigure*> figures) {
                 }
             }
         }
-        if(y_cell == 6){                             // 2 клетки вверх
+        if(y_cell == 6){                             // 2 РєР»РµС‚РєРё РІРІРµСЂС…
             int* cell = new int[2];
             cell[0] = i - 2;
             cell[1] = x_cell;
@@ -85,17 +85,17 @@ void Pawn :: count_move_ability_cells(vector<BaseFigure*> figures) {
             }
         }
     }
-    if(type == 1) {     //  чёрная
+    if(type == 1) {     //  С‡С‘СЂРЅР°СЏ
         int i = y_cell;
         if(y_cell != 7){
             for(auto figura : figures) {
-                if((i + 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 7)) {    // правая нижняя диагональ
+                if((i + 1 == figura->get_y_cell()) && (x_cell + 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 7)) {    // РїСЂР°РІР°СЏ РЅРёР¶РЅСЏСЏ РґРёР°РіРѕРЅР°Р»СЊ
                     int* cell = new int[2];
                     cell[0] = i + 1;
                     cell[1] = x_cell + 1;
                     move_ability_cells.push_back(cell);
                 }
-                if((i + 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 0)) {    // левая нижняя диагональ
+                if((i + 1 == figura->get_y_cell()) && (x_cell - 1 == figura->get_x_cell()) && (type != figura->get_type()) && (x_cell != 0)) {    // Р»РµРІР°СЏ РЅРёР¶РЅСЏСЏ РґРёР°РіРѕРЅР°Р»СЊ
                     int* cell = new int[2];
                     cell[0] = i + 1;
                     cell[1] = x_cell - 1;
@@ -103,7 +103,7 @@ void Pawn :: count_move_ability_cells(vector<BaseFigure*> figures) {
                 }
             }
             int* cell = new int[2];
-            cell[0] = i + 1;                         // клетка вниз
+            cell[0] = i + 1;                         // РєР»РµС‚РєР° РІРЅРёР·
             cell[1] = x_cell;
             move_ability_cells.push_back(cell);
             for(auto figura : figures) {
@@ -115,7 +115,7 @@ void Pawn :: count_move_ability_cells(vector<BaseFigure*> figures) {
         }
         if(y_cell == 1){
             int* cell = new int[2];
-            cell[0] = i + 2;                        // 2 клетки вниз
+            cell[0] = i + 2;                        // 2 РєР»РµС‚РєРё РІРЅРёР·
             cell[1] = x_cell;
             move_ability_cells.push_back(cell);
             for(auto figura : figures) {
